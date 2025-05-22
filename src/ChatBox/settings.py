@@ -21,6 +21,9 @@ env = environ.Env(
     DB_PASS=(str, ""),
     DB_HOST=(str, ""),
     DB_PORT=(int, ""),
+    REDIS_HOST=(str, ""),
+    REDIS_PORT=(int, ""),
+    REDIS_DB=(int, 1),
 )
 
 
@@ -98,6 +101,16 @@ DATABASES = {
     }
 }
 
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": f"redis://{env("REDIS_HOST")}:{env("REDIS_PORT")}/{env("REDIS_DB")}",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
