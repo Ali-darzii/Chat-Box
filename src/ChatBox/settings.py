@@ -168,6 +168,12 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=3),
     'UPDATE_LAST_LOGIN': True,
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "SIGNING_KEY": SECRET_KEY,
+
+    "TOKEN_OBTAIN_SERIALIZER": "auth_module.serializers.CustomTokenObtainPairSerializer",
+
 }
 
 

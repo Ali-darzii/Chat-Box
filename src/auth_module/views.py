@@ -12,7 +12,7 @@ import logging
 from auth_module.models import User
 from auth_module.tasks import send_sms
 from utils.response import ErrorResponses as error
-from auth_module.serializer import OTPSendSerializer, OTPCheckSerializer
+from auth_module.serializer import OTPSendSerializer, OTPCheckSerializer, CustomTokenObtainPairSerializer
 from utils.throttle import SendOTPThrottle, CheckOTPThrottle, UserExistThrottle
 from utils.utils import generate_tk
 
@@ -101,12 +101,12 @@ class OTPView(APIView):
 
         refresh_token = str(RefreshToken.for_user(user))
         jwt = {
-            "access_token": str(AccessToken.for_user(user)),
-            "refresh_token": refresh_token,
+            "access": str(AccessToken.for_user(user)),
+            "refresh": refresh_token,
             "user_id": user.id,
         }
         response = Response(jwt, status=status.HTTP_200_OK)
-        response.set_cookie("refresh_token", refresh_token, httponly=True, secure=request.is_secure())
+        response.set_cookie("refresh", refresh_token, httponly=True, secure=request.is_secure())
 
         return response
 
@@ -121,12 +121,18 @@ class OTPView(APIView):
         return [UserExistThrottle()]
 
 class CustomTokenPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+
     def post(self, request, *args, **kwargs):
         try:
             response = super().post(request, *args, **kwargs)
+            logger.info(response.data)
+            refresh_token = response.data["refresh"]
+            if not refresh_token:
+                raise
             response.set_cookie(
-                "refresh_token",
-                response.data["refresh_token"],
+                "refresh",
+                refresh_token,
                 httponly=True,
                 secure=request.is_secure(),
             )
@@ -146,11 +152,11 @@ class CustomTokenVerify(APIView):
 class CustomRefreshTokenView(TokenRefreshView):
     def post(self, request, *args, **kwargs):
         try:
-            request.data["refresh_token"] = request.COOKIES.get("refresh_token")
+            request.data["refresh"] = request.COOKIES.get("refresh")
             response = super().post(request, *args, **kwargs)
             response.set_cookie(
-                "refresh_token",
-                response.data["refresh_token"],
+                "refresh",
+                response.data["refresh"],
                 httponly=True,
                 secure=request.is_secure(),
             )
