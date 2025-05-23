@@ -155,7 +155,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10,
     'DEFAULT_THROTTLE_RATES': {
-
+        'user-exist': '30/minute',
+        'send-otp': '5/minute',
+        'check-otp': '10/minute',
     }
 }
 
@@ -209,3 +211,6 @@ LOGGING = {
 
     }
 }
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL
+CELERY_RESULT_EXPIRES = timedelta(minutes=1)
