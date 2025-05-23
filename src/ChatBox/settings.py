@@ -11,25 +11,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 from datetime import timedelta
 from pathlib import Path
-import environ
+from dotenv import load_dotenv
 import os
-
-env = environ.Env(
-    DEBUG=(bool, False),
-    DB_NAME=(str, ""),
-    DB_USER=(str, ""),
-    DB_PASS=(str, ""),
-    DB_HOST=(str, ""),
-    DB_PORT=(int, ""),
-    REDIS_HOST=(str, ""),
-    REDIS_PORT=(int, ""),
-    REDIS_DB=(int, 1),
-)
-
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -39,7 +26,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = 'django-insecure-_w2_)be@=!0ht!_odc0zmwsjcr%k%v1q2r_otbm=o)lue=xi&n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = os.getenv('DEBUG', False)
 
 ALLOWED_HOSTS = []
 
@@ -53,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "auth_module",
 ]
 
 MIDDLEWARE = [
@@ -89,28 +77,29 @@ WSGI_APPLICATION = 'ChatBox.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASS'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
+        'NAME': os.getenv('DD_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASS'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
-
+REDIS_URL = f"redis://{os.getenv("REDIS_HOST")}:{os.getenv("REDIS_PORT")}/{os.getenv("REDIS_DB")}"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"redis://{env("REDIS_HOST")}:{env("REDIS_PORT")}/{env("REDIS_DB")}",
+        "LOCATION": REDIS_URL,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     }
 }
+OTP_TIMEOUT_DURATION = 60
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -134,6 +123,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
+AUTH_USER_MODEL = 'auth_module.User'
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -146,7 +137,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__name__))
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -166,6 +159,9 @@ REST_FRAMEWORK = {
     }
 }
 
+SMS_SERVICE_DOMAIN = "https://api.limosms.com/api/sendpatternmessage"
+SMS_SERVICE_API_KEY = os.getenv('SMS_SERVICE_API_KEY')
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=3),
@@ -173,4 +169,43 @@ SIMPLE_JWT = {
 }
 
 
+LOGS_DIR = os.path.join(PROJECT_ROOT, 'log/python/ems/')
 
+LOGGING = {
+    'version':1,
+    'disable_existing_loggers': False,
+    'loggers':{
+        'django':{
+            'handlers':['warning','error', 'info'],
+        }
+    },
+    'handlers':{
+        'warning':{
+            'level':'WARNING',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'when': 'midnight',
+            'filename': f'{LOGS_DIR}/warning.log',
+            'formatter':'simpleRe',
+        },
+        'error':{
+            'level':'ERROR',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'when': 'midnight',
+            'filename': f'{LOGS_DIR}/error.log',
+            'formatter':'simpleRe',
+        },'info':{
+            'level':'INFO',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'when': 'midnight',
+            'filename': f'{LOGS_DIR}/info.log',
+            'formatter':'simpleRe',
+        }
+    },
+    'formatters':{
+        'simpleRe': {
+            'format': '{levelname} {asctime} {pathname} {module} {lineno} - {message}',
+            'style': '{',
+        }
+
+    }
+}
