@@ -1,5 +1,5 @@
 import random
 
 
-def generate_tk() -> int:
-    return random.randint(100000, 999999)
+def generate_tk() -> str:
+    return str(random.randint(100000, 999999))

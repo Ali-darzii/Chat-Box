@@ -1,4 +1,10 @@
+
 class ErrorResponses:
+
+    @staticmethod
+    def field_is_unique(field:str) -> dict:
+        return {"detail":f"{field}_IS_TAKEN", "error_code":0}
+
     BAD_FORMAT = {'detail': 'BAD_FORMAT', 'error_code': 1}
     OBJECT_NOT_FOUND = {'detail': 'OBJECT_NOT_FOUND', 'error_code': 2}
     WRONG_LOGIN_DATA = {'detail': 'WRONG_USER_LOGIN_DATA', 'error_code': 3}

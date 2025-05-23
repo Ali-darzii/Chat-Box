@@ -8,7 +8,7 @@ import logging
 logger = logging.getLogger("django")
 
 
-@shared_task(queue='send-sms')
+@shared_task(queue='send_sms')
 def send_sms(phone_no:str, token:str):
     url = settings.SMS_SERVICE_DOMAIN
     api_key = settings.SMS_SERVICE_API_KEY
@@ -24,6 +24,7 @@ def send_sms(phone_no:str, token:str):
             if request.status_code == status.HTTP_200_OK:
                 if request_response["success"] is True:
                     logger.info("Sms sent successfully.")
+                    break
         return logger.warning("Error sending SMS!")
     except Exception as e:
         logger.critical(f"Error sending SMS: {e}", exc_info=True)

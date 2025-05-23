@@ -1,33 +1,47 @@
 import re
 from rest_framework import serializers
 
+from utils.response import ErrorResponses as error
 from auth_module.models import User
 
 
-class OTPSendSerializer(serializers.Serializer):
+class OTPSendSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['phone_no', "password","first_name", "last_name", "username"]
+
     phone_no = serializers.CharField()
+    password = serializers.CharField(max_length=128, required=False)
 
     def validate_phone_no(self, phone_no: str):
         if not re.match(r'^09\d{9}$', phone_no):
-            raise serializers.ValidationError('Phone number bad format.')
+            raise serializers.ValidationError(error.BAD_FORMAT)
         return phone_no
 
+    def validate_password(self, password: str):
+        if not re.fullmatch(r"^(?=.*[A-Z])(?=.*\d).+$", password):
+            raise serializers.ValidationError(error.BAD_FORMAT)
+        return password
 
-class OTPCheckSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['phone_no', "first_name", "last_name", "username"]
-        extra_kwargs = {"password": {"write_only": True}}
+    def validate_username(self, username: str):
+        if not re.fullmatch(r"^[a-zA-Z][a-zA-Z0-9_]{2,23}[a-zA-Z0-9]$", username):
+            raise serializers.ValidationError(error.BAD_FORMAT)
+        return username
 
-    password = serializers.CharField(max_length=128, write_only=True, required=False)
+
+
+class OTPCheckSerializer(serializers.Serializer):
+    phone_no = serializers.CharField()
     tk = serializers.CharField(min_length=6, max_length=6)
 
     def validate_phone_no(self, phone_no: str):
         if not re.match(r'^09\d{9}$', phone_no):
-            raise serializers.ValidationError('Phone number bad format.')
+            raise serializers.ValidationError(error.BAD_FORMAT)
         return phone_no
 
     def validate_tk(self, tk: str):
         if not tk.isnumeric():
-            raise serializers.ValidationError("Char field is not numeric.")
+            raise serializers.ValidationError(error.BAD_FORMAT)
         return tk
+
+
