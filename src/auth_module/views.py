@@ -12,7 +12,7 @@ import logging
 from auth_module.models import User
 from auth_module.tasks import send_sms
 from utils.response import ErrorResponses as error
-from auth_module.serializer import OTPSendSerializer, OTPCheckSerializer, CustomTokenObtainPairSerializer
+from auth_module.serializers import OTPSendSerializer, OTPCheckSerializer, CustomTokenObtainPairSerializer
 from utils.throttle import SendOTPThrottle, CheckOTPThrottle, UserExistThrottle
 from utils.utils import generate_tk
 

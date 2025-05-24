@@ -28,12 +28,13 @@ SECRET_KEY = 'django-insecure-_w2_)be@=!0ht!_odc0zmwsjcr%k%v1q2r_otbm=o)lue=xi&n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,7 +77,7 @@ TEMPLATES = [
         },
     },
 ]
-
+ASGI_APPLICATION = "ChatBox.asgi.application"
 WSGI_APPLICATION = 'ChatBox.wsgi.application'
 
 
@@ -105,6 +106,17 @@ CACHES = {
     }
 }
 OTP_TIMEOUT_DURATION = 60
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(os.getenv("REDIS_HOST"), os.getenv("REDIS_PORT"))],
+        },
+    },
+}
+
 
 
 # Password validation
