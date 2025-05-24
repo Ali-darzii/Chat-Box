@@ -40,6 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # External
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
+
+    # Internal
     "auth_module",
 ]
 
@@ -177,7 +183,7 @@ SIMPLE_JWT = {
 }
 
 
-LOGS_DIR = os.path.join(PROJECT_ROOT, 'log/python/ems/')
+LOGS_DIR = os.path.join(PROJECT_ROOT, 'log/python/chat-box/')
 
 LOGGING = {
     'version':1,
