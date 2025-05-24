@@ -1,8 +1,10 @@
 import re
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from utils.response import ErrorResponses as error
 from auth_module.models import User
+
 
 
 class OTPSendSerializer(serializers.ModelSerializer):
@@ -45,3 +47,10 @@ class OTPCheckSerializer(serializers.Serializer):
         return tk
 
 
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token['phone_no'] = user.phone_no
+        return token
