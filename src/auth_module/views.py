@@ -1,3 +1,5 @@
+from pickle import APPEND
+
 from django.conf import settings
 from django.utils import timezone
 from rest_framework import status
@@ -164,3 +166,21 @@ class CustomRefreshTokenView(TokenRefreshView):
         except Exception as e:
             logger.critical(f"Refresh Token API, {e}", exc_info=True)
             return Response(error.SOMETHING_WENT_WRONG, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class Logout(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Exception as e:
+            logger.critical(e, exc_info=True)
+            return Response(error.SOMETHING_WENT_WRONG, status=status.HTTP_400_BAD_REQUEST)
+
+
