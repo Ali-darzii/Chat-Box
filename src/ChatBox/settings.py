@@ -183,7 +183,7 @@ SIMPLE_JWT = {
 }
 
 
-LOGS_DIR = os.path.join(PROJECT_ROOT, 'log/python/ems/')
+LOGS_DIR = os.path.join(PROJECT_ROOT, 'log/python/chat-box/')
 
 LOGGING = {
     'version':1,

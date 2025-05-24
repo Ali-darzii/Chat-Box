@@ -1,5 +1,3 @@
-from pickle import APPEND
-
 from django.conf import settings
 from django.utils import timezone
 from rest_framework import status
@@ -19,6 +17,7 @@ from utils.throttle import SendOTPThrottle, CheckOTPThrottle, UserExistThrottle
 from utils.utils import generate_tk
 
 logger = logging.getLogger("django")
+
 
 class OTPView(APIView):
     """
@@ -41,14 +40,14 @@ class OTPView(APIView):
         serializer = OTPSendSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         phone_no = serializer.validated_data['phone_no']
-        data = {"data":"success"}
+        data = {}
         try:
             User.objects.get(phone_no=phone_no)
             data["user_exist"] = True
-            return Response(data=data,status=status.HTTP_200_OK)
+            return Response(data=data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             data["user_exist"] = False
-            return Response(data=data,status=status.HTTP_404_NOT_FOUND)
+            return Response(data=data, status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request):
         """ Send OTP """
@@ -59,7 +58,7 @@ class OTPView(APIView):
 
         prev_tk = redis.get(f"otp_{phone_no}")
         if prev_tk:
-            return Response(error.TOKEN_IS_EXPIRED_OR_INVALID, status=status.HTTP_429_TOO_MANY_REQUESTS)
+            return Response(error.BAD_FORMAT, status=status.HTTP_429_TOO_MANY_REQUESTS)
         tk = generate_tk()
         redis.set(f"otp_{phone_no}", tk, timeout=settings.OTP_TIMEOUT_DURATION)
 
@@ -81,7 +80,7 @@ class OTPView(APIView):
         except KeyError:
             return Response(error.MISSING_PARAMS, status=status.HTTP_400_BAD_REQUEST)
         send_sms.delay(phone_no, tk)
-        return Response({"data":"Sms sent successfully", "new_user": True}, status=status.HTTP_200_OK)
+        return Response({"data": "Sms sent successfully", "new_user": True}, status=status.HTTP_200_OK)
 
     def put(self, request):
         """ Check OTP """
@@ -112,7 +111,6 @@ class OTPView(APIView):
 
         return response
 
-
     def get_throttles(self):
         method = self.request.method
         if method == "POST":
@@ -121,6 +119,7 @@ class OTPView(APIView):
             return [CheckOTPThrottle()]
 
         return [UserExistThrottle()]
+
 
 class CustomTokenPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
@@ -142,6 +141,7 @@ class CustomTokenPairView(TokenObtainPairView):
         except Exception as e:
             logger.critical(e, exc_info=True)
             return Response(error.SOMETHING_WENT_WRONG, status=status.HTTP_400_BAD_REQUEST)
+
 
 class CustomTokenVerify(APIView):
     permission_classes = [IsAuthenticated]
@@ -168,19 +168,15 @@ class CustomRefreshTokenView(TokenRefreshView):
             return Response(error.SOMETHING_WENT_WRONG, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class Logout(APIView):
-
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
         try:
-            refresh_token = request.data["refresh"]
+            refresh_token = request.COOKIES["refresh"]
             token = RefreshToken(refresh_token)
             token.blacklist()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Exception as e:
             logger.critical(e, exc_info=True)
             return Response(error.SOMETHING_WENT_WRONG, status=status.HTTP_400_BAD_REQUEST)
-
-
