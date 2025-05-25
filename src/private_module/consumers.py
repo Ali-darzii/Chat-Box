@@ -23,17 +23,19 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
     # Receive message from WebSocket
-    async def receive(self, text_data):
+    async def receive(self, text_data:str):
         try:
-            _ = text_data["message"]
-            logger.critical(text_data)
+            json_data = json.loads(text_data)
+            ping = json_data["message"]
             await self.channel_layer.group_send(
-                self.room_group_name, {"message": "pong"}
+                self.room_group_name, {"type": "chat_message", "message":"ss"}
             )
         except Exception as e:
             logger.warning(e, exc_info=True)
 
-    # Receive message from room group
+    async def user_online(self, event:dict):
+        await self.send(text_data=json.dumps({"message": "pong"}))
+
     async def chat_message(self, event: dict):
         message = event["message"]
 
