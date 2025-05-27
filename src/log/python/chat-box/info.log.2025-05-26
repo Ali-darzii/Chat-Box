@@ -1,0 +1,212 @@
+INFO 2025-05-26 16:43:22,899 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 16:43:57,693 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 16:43:58,275 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 16:43:58,977 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:47916]
+INFO 2025-05-26 16:43:58,988 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:47916]
+WARNING 2025-05-26 16:43:59,611 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - Expecting value: line 1 column 1 (char 0)
+Traceback (most recent call last):
+  File "/home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py", line 28, in receive
+    json_data = json.loads(text_data)
+  File "/usr/lib/python3.13/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib/python3.13/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+INFO 2025-05-26 16:45:35,775 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 16:45:36,492 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 16:45:38,858 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:35420]
+INFO 2025-05-26 16:45:38,866 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:35420]
+INFO 2025-05-26 16:45:46,930 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 16:45:47,492 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 16:45:48,570 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:33326]
+INFO 2025-05-26 16:45:48,578 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:33326]
+INFO 2025-05-26 16:51:19,188 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 16:51:19,753 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 16:51:20,674 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:53644]
+INFO 2025-05-26 16:51:20,682 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:53644]
+INFO 2025-05-26 16:54:20,419 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 16:54:21,185 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 16:54:21,614 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:56050]
+CRITICAL 2025-05-26 16:54:21,619 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - RedisChannelLayer(hosts=[{'host': 'localhost', 'port': '6379'}])
+INFO 2025-05-26 16:54:21,620 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:56050]
+INFO 2025-05-26 16:54:39,650 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 16:54:40,173 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 16:54:41,665 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:60784]
+CRITICAL 2025-05-26 16:54:41,672 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - SSSsssss RedisChannelLayer(hosts=[{'host': 'localhost', 'port': '6379'}])
+INFO 2025-05-26 16:54:41,672 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:60784]
+INFO 2025-05-26 16:54:53,238 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 16:55:16,480 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:50966]
+CRITICAL 2025-05-26 16:55:16,488 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - SSSsssss RedisChannelLayer(hosts=[{'host': 'localhost', 'port': '6379'}])
+INFO 2025-05-26 16:55:16,488 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:50966]
+INFO 2025-05-26 16:55:16,852 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 16:55:17,458 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 16:55:26,684 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:54124]
+CRITICAL 2025-05-26 16:55:26,690 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - SSSsssss []
+INFO 2025-05-26 16:55:26,691 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:54124]
+INFO 2025-05-26 16:55:55,330 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 16:55:55,858 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 16:55:56,788 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:38334]
+INFO 2025-05-26 16:55:56,795 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:38334]
+CRITICAL 2025-05-26 16:55:56,795 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 23 - SSSsssss []
+INFO 2025-05-26 16:56:03,171 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 16:56:03,691 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 16:56:03,881 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:54156]
+INFO 2025-05-26 16:56:03,886 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:54156]
+CRITICAL 2025-05-26 16:56:03,886 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 23 - SSSssssfs []
+INFO 2025-05-26 17:25:18,266 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:25:18,855 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:25:19,769 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:38096]
+INFO 2025-05-26 17:25:19,774 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:38096]
+CRITICAL 2025-05-26 17:25:21,793 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - SSSssssfs []
+INFO 2025-05-26 17:25:22,011 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:38096]
+INFO 2025-05-26 17:26:07,761 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:26:08,448 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:26:11,360 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:37046]
+INFO 2025-05-26 17:26:11,367 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:37046]
+CRITICAL 2025-05-26 17:26:12,076 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - SSSssssfs []
+CRITICAL 2025-05-26 17:26:21,622 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - SSSssssfs []
+CRITICAL 2025-05-26 17:26:30,526 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - SSSssssfs []
+INFO 2025-05-26 17:29:19,396 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:29:19,924 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:29:22,952 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:40500]
+INFO 2025-05-26 17:29:22,959 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:40500]
+CRITICAL 2025-05-26 17:29:23,593 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - SSSssssfs RedisChannelLayer(hosts=[{'host': 'localhost', 'port': '6379'}])
+INFO 2025-05-26 17:33:18,530 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:33:19,339 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:33:31,970 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 180 - [mHTTP GET /api/admin/auth_module/user/11/change/ 200 [0.12, 127.0.0.1:49402][0m
+INFO 2025-05-26 17:33:32,055 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 180 - [mHTTP GET /static/admin/img/icon-addlink.svg 200 [0.03, 127.0.0.1:49402][0m
+INFO 2025-05-26 17:33:32,055 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 180 - [mHTTP GET /static/admin/css/responsive.css 200 [0.03, 127.0.0.1:49406][0m
+INFO 2025-05-26 17:33:32,055 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 180 - [mHTTP GET /static/admin/js/prepopulate_init.js 200 [0.01, 127.0.0.1:49436][0m
+INFO 2025-05-26 17:33:32,239 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 180 - [mHTTP GET /static/admin/img/icon-clock.svg 200 [0.00, 127.0.0.1:49448][0m
+INFO 2025-05-26 17:33:32,239 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 180 - [mHTTP GET /static/admin/img/icon-calendar.svg 200 [0.00, 127.0.0.1:49442][0m
+INFO 2025-05-26 17:35:18,249 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:35:18,873 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:35:32,277 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:35:32,749 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:37:20,467 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:37:21,177 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:37:56,973 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:37:57,617 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:38:00,867 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:38:01,439 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:38:03,761 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:38492]
+CRITICAL 2025-05-26 17:38:03,765 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 17 - None Sffffs
+INFO 2025-05-26 17:38:03,767 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:38492]
+INFO 2025-05-26 17:38:15,905 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:38492]
+INFO 2025-05-26 17:38:37,244 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:38:37,917 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:38:51,321 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:38:51,961 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:40:09,288 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:40:09,745 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:40:38,381 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:40:39,087 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:40:40,918 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:52624]
+INFO 2025-05-26 17:40:40,922 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:52624]
+INFO 2025-05-26 17:40:40,922 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:52624]
+INFO 2025-05-26 17:40:46,665 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:52632]
+INFO 2025-05-26 17:40:46,666 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:52632]
+INFO 2025-05-26 17:40:46,667 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:52632]
+INFO 2025-05-26 17:40:57,525 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:60306]
+INFO 2025-05-26 17:40:57,526 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:60306]
+INFO 2025-05-26 17:40:57,526 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:60306]
+INFO 2025-05-26 17:40:57,595 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:40:58,110 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:40:58,744 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:60310]
+INFO 2025-05-26 17:41:03,002 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:60310]
+INFO 2025-05-26 17:41:06,534 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:41:07,064 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:41:14,118 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:33506]
+INFO 2025-05-26 17:41:14,123 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:33506]
+INFO 2025-05-26 17:41:14,123 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:33506]
+INFO 2025-05-26 17:42:01,172 /home/ali/Desktop/Django/ChatBox/src/auth_module/views.py views 130 - {'refresh': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0ODU0MDUyMSwiaWF0IjoxNzQ4MjgxMzIxLCJqdGkiOiI3YzJkZWI2Zjg2YzQ0YmM0YWNkOGM1YjA3YjRkZDM5YiIsInVzZXJfaWQiOjExLCJwaG9uZV9ubyI6IjA5MTIxNTQwNjYxIn0.hktPD2iQnwfZrRc_WAp4FjdQ4KWk_2p5S-cLDMkAOzM', 'access': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4MzY3NzIxLCJpYXQiOjE3NDgyODEzMjEsImp0aSI6IjYzYzI3ZDZhZDc2MzRiZjU4ZTVhODhkODllMzQ4N2QzIiwidXNlcl9pZCI6MTEsInBob25lX25vIjoiMDkxMjE1NDA2NjEifQ.tm_mZIjiz6kIMk2nuT9zAEEfIgCrtSs9d219YP8i0Tk'}
+INFO 2025-05-26 17:42:01,174 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 180 - [mHTTP POST /api/auth/token/ 200 [0.15, 127.0.0.1:45808][0m
+INFO 2025-05-26 17:44:19,209 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:43592]
+INFO 2025-05-26 17:44:19,211 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:43592]
+INFO 2025-05-26 17:44:19,211 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:43592]
+INFO 2025-05-26 17:44:28,678 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:51622]
+INFO 2025-05-26 17:44:28,679 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:51622]
+INFO 2025-05-26 17:44:28,679 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:51622]
+INFO 2025-05-26 17:44:29,483 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:51638]
+INFO 2025-05-26 17:44:29,484 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:51638]
+INFO 2025-05-26 17:44:29,519 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:51638]
+INFO 2025-05-26 17:44:30,074 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:58948]
+INFO 2025-05-26 17:44:30,076 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:58948]
+INFO 2025-05-26 17:44:30,076 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:58948]
+INFO 2025-05-26 17:44:30,662 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:58960]
+INFO 2025-05-26 17:44:30,663 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:58960]
+INFO 2025-05-26 17:44:30,664 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:58960]
+INFO 2025-05-26 17:44:32,100 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:58976]
+INFO 2025-05-26 17:44:32,102 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:58976]
+INFO 2025-05-26 17:44:32,102 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:58976]
+INFO 2025-05-26 17:44:32,685 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:58986]
+INFO 2025-05-26 17:44:32,686 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:58986]
+INFO 2025-05-26 17:44:32,687 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:58986]
+INFO 2025-05-26 17:44:33,174 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:58990]
+INFO 2025-05-26 17:44:33,177 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:58990]
+INFO 2025-05-26 17:44:33,177 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:58990]
+INFO 2025-05-26 17:44:33,822 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:58996]
+INFO 2025-05-26 17:44:33,823 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:58996]
+INFO 2025-05-26 17:44:33,824 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:58996]
+INFO 2025-05-26 17:44:55,515 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:34090]
+INFO 2025-05-26 17:44:55,517 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:34090]
+INFO 2025-05-26 17:44:55,518 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:34090]
+INFO 2025-05-26 17:44:57,067 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:34092]
+INFO 2025-05-26 17:44:57,069 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:34092]
+INFO 2025-05-26 17:44:57,069 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:34092]
+INFO 2025-05-26 17:45:16,459 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:56588]
+INFO 2025-05-26 17:45:16,461 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:56588]
+INFO 2025-05-26 17:45:16,461 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:56588]
+INFO 2025-05-26 17:45:17,204 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:56592]
+INFO 2025-05-26 17:45:17,206 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:56592]
+INFO 2025-05-26 17:45:17,206 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:56592]
+INFO 2025-05-26 17:46:09,666 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:46:10,190 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:46:21,568 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:46:22,032 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:46:30,082 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:36308]
+INFO 2025-05-26 17:46:30,088 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:36308]
+INFO 2025-05-26 17:46:30,088 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:36308]
+INFO 2025-05-26 17:46:30,430 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:46:30,924 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:46:31,597 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:36310]
+INFO 2025-05-26 17:46:31,600 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:36310]
+INFO 2025-05-26 17:46:31,601 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:36310]
+INFO 2025-05-26 17:46:33,219 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:36322]
+INFO 2025-05-26 17:46:33,221 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:36322]
+INFO 2025-05-26 17:46:33,221 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:36322]
+INFO 2025-05-26 17:46:33,875 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:36332]
+INFO 2025-05-26 17:46:33,876 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:36332]
+INFO 2025-05-26 17:46:33,877 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:36332]
+INFO 2025-05-26 17:46:44,383 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:46:47,764 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:46316]
+INFO 2025-05-26 17:46:47,769 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:46316]
+INFO 2025-05-26 17:46:47,769 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:46316]
+INFO 2025-05-26 17:46:58,897 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:46:59,484 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:48:13,218 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:49066]
+INFO 2025-05-26 17:48:13,223 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:49066]
+INFO 2025-05-26 17:48:13,223 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:49066]
+INFO 2025-05-26 17:48:57,391 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:48:58,026 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:49:00,418 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:33750]
+INFO 2025-05-26 17:49:00,423 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 203 - WebSocket REJECT /ws/chat/ [127.0.0.1:33750]
+INFO 2025-05-26 17:49:00,423 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:33750]
+INFO 2025-05-26 17:53:32,116 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:53:32,823 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:53:37,939 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:43676]
+INFO 2025-05-26 17:53:42,001 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:43676]
+INFO 2025-05-26 17:54:08,671 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py changed, reloading.
+INFO 2025-05-26 17:54:09,414 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 668 - Watching for file changes with StatReloader
+INFO 2025-05-26 17:54:10,246 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:51888]
+CRITICAL 2025-05-26 17:54:10,250 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - None Sffffs
+INFO 2025-05-26 17:54:10,252 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:51888]
+INFO 2025-05-26 17:54:17,884 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 199 - WebSocket DISCONNECT /ws/chat/ [127.0.0.1:51888]
+INFO 2025-05-26 17:54:18,603 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 201 - WebSocket HANDSHAKING /ws/chat/ [127.0.0.1:51900]
+CRITICAL 2025-05-26 17:54:18,605 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - None Sffffs
+INFO 2025-05-26 17:54:18,641 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/daphne/management/commands/runserver.py runserver 197 - WebSocket CONNECT /ws/chat/ [127.0.0.1:51900]
+INFO 2025-05-26 17:57:34,422 /home/ali/Desktop/Django/ChatBox/.venv/lib/python3.13/site-packages/django/utils/autoreload.py autoreload 266 - /home/ali/Desktop/Django/ChatBox/src/ChatBox/settings.py changed, reloading.

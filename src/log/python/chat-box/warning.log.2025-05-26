@@ -1,0 +1,27 @@
+WARNING 2025-05-26 16:43:59,611 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - Expecting value: line 1 column 1 (char 0)
+Traceback (most recent call last):
+  File "/home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py", line 28, in receive
+    json_data = json.loads(text_data)
+  File "/usr/lib/python3.13/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib/python3.13/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+CRITICAL 2025-05-26 16:54:21,619 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - RedisChannelLayer(hosts=[{'host': 'localhost', 'port': '6379'}])
+CRITICAL 2025-05-26 16:54:41,672 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - SSSsssss RedisChannelLayer(hosts=[{'host': 'localhost', 'port': '6379'}])
+CRITICAL 2025-05-26 16:55:16,488 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - SSSsssss RedisChannelLayer(hosts=[{'host': 'localhost', 'port': '6379'}])
+CRITICAL 2025-05-26 16:55:26,690 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - SSSsssss []
+CRITICAL 2025-05-26 16:55:56,795 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 23 - SSSsssss []
+CRITICAL 2025-05-26 16:56:03,886 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 23 - SSSssssfs []
+CRITICAL 2025-05-26 17:25:21,793 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - SSSssssfs []
+CRITICAL 2025-05-26 17:26:12,076 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - SSSssssfs []
+CRITICAL 2025-05-26 17:26:21,622 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - SSSssssfs []
+CRITICAL 2025-05-26 17:26:30,526 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - SSSssssfs []
+CRITICAL 2025-05-26 17:29:23,593 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - SSSssssfs RedisChannelLayer(hosts=[{'host': 'localhost', 'port': '6379'}])
+CRITICAL 2025-05-26 17:38:03,765 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 17 - None Sffffs
+CRITICAL 2025-05-26 17:54:10,250 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - None Sffffs
+CRITICAL 2025-05-26 17:54:18,605 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - None Sffffs
