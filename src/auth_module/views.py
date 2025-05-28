@@ -137,6 +137,7 @@ class CustomTokenPairView(TokenObtainPairView):
                 httponly=True,
                 secure=request.is_secure(),
             )
+            response.data["user_id"] = User.objects.get(phone_no=request.data["phone_no"]).id
             return response
         except Exception as e:
             logger.critical(e, exc_info=True)
