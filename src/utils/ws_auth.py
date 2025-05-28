@@ -23,9 +23,9 @@ class JWTAuthMiddleware(BaseMiddleware):
     @database_sync_to_async
     def get_user(self, token_key):
         try:
-            user = JWTAuthentication().authenticate(Request(token_key))
-            if user is not None:
-                return user[0]
+            user, _ = JWTAuthentication().authenticate(Request(token_key))
+            if user:
+                return user
         except User.DoesNotExist:
             return AnonymousUser()
 

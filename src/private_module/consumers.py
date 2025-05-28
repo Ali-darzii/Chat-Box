@@ -26,7 +26,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
-    async def receive_json(self, data: dict):
+    async def receive_json(self, data: dict, **kwargs):
         try:
             message = data["message"]
             if message == "ping":
@@ -38,8 +38,8 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             logger.warning(e, exc_info=True)
 
     async def online_users(self, event:dict):
-        # get online users that related to that person
-        await self.channel_layer.group_send()
+        # TODO:get online users that related to that person
+        await self.send_json({"online_users":[]})
 
     async def chat_message(self, event: dict):
         message = event["message"]
