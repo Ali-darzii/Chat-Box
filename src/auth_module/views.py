@@ -127,7 +127,6 @@ class CustomTokenPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
         try:
             response = super().post(request, *args, **kwargs)
-            logger.info(response.data)
             refresh_token = response.data["refresh"]
             if not refresh_token:
                 raise
