@@ -2,5 +2,5 @@ from django.urls import path
 from private_module import views
 
 urlpatterns = [
-    path("send-message/", views.SendPrivateMessageView.as_view(), name="send-private-message"),
+    path("create-private/", views.CreatePrivateMessageView.as_view(), name="create_private"),
 ]
