@@ -96,6 +96,7 @@ DATABASES = {
     }
 }
 
+
 REDIS_URL = f"redis://{os.getenv("REDIS_HOST")}:{os.getenv("REDIS_PORT")}/{os.getenv("REDIS_DB")}"
 CACHES = {
     "default": {
@@ -106,8 +107,8 @@ CACHES = {
         }
     }
 }
-OTP_TIMEOUT_DURATION = 60
-
+OTP_TTL = 60
+ONLINE_TTL = 60
 
 CHANNEL_LAYERS = {
     "default": {
