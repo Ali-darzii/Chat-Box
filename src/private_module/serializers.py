@@ -4,8 +4,21 @@ from utils.response import ErrorResponses as error
 from private_module.models import PrivateBox
 
 
+class GetPrivateBoxSerializer(serializers.Serializer):
+    class Meta:
+        model = PrivateBox
+        fields = ("id","user")
+        
+    user = serializers.SerializerMethodField()
+    
+    def get_user(self, obj: PrivateBox):
+        auth_user = self.context["request"].user
+        return obj.first_user if obj.second_user == auth_user else obj.second_user
 
-class CreatePrivateBoxSerializer(serializers.ModelSerializer):
+
+class PrivateBoxSerializer(serializers.ModelSerializer):
+
+    
     class Meta:
             model = PrivateBox
             fields = "__all__"
@@ -16,8 +29,4 @@ class CreatePrivateBoxSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(error.BAD_FORMAT)
         return attrs
     
-    def post(self, request, *args, **kwargs):
-        try: 
-            return super().post(request, *args, **kwargs)
-        except UniqueError:
-            raise serializers.ValidationError(error.BAD_FORMAT)
+    

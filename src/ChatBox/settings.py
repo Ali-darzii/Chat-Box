@@ -84,14 +84,6 @@ WSGI_APPLICATION = 'ChatBox.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-print("fFFff", {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DD_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASS'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
-    })
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
