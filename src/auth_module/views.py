@@ -60,7 +60,7 @@ class OTPView(APIView):
         if prev_tk:
             return Response(error.BAD_FORMAT, status=status.HTTP_429_TOO_MANY_REQUESTS)
         tk = generate_tk()
-        redis.set(f"otp_{phone_no}", tk, timeout=settings.OTP_TIMEOUT_DURATION)
+        redis.set(f"otp_{phone_no}", tk, timeout=settings.OTP_TTL)
 
         user_exist = User.objects.filter(phone_no=phone_no).exists()
         if user_exist:
