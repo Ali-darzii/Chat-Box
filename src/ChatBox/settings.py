@@ -84,7 +84,14 @@ WSGI_APPLICATION = 'ChatBox.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+print("fFFff", {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DD_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASS'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
+    })
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -97,7 +104,17 @@ DATABASES = {
 }
 
 
-REDIS_URL = f"redis://{os.getenv("REDIS_HOST")}:{os.getenv("REDIS_PORT")}/{os.getenv("REDIS_DB")}"
+INFLUX_HOST = os.getenv('INFLUX_HOST')
+INFLUX_PORT = os.getenv('INFLUX_PORT')
+INFLUX_AUTH_TOKEN = os.getenv('INFLUX_AUTH_TOKEN')
+INFLUX_ORG = os.getenv('INFLUX_ORG')
+INFLUX_BUCKET = os.getenv('INFLUX_BUCKET')
+INFLUX_URL = f"http://{INFLUX_HOST}:{INFLUX_PORT}"
+
+REDIS_HOST = os.getenv('REDIS_HOST')
+REDIS_PORT = os.getenv('REDIS_PORT')
+REDIS_DB = os.getenv('REDIS_DB')
+REDIS_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
