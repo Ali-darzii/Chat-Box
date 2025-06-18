@@ -47,7 +47,7 @@ class SendPrivateMessageSerialzier(serializers.Serializer):
         
         return attrs
     
-    def file_validate(self, file):
-        if file:
-            print(file.size)
+    def validate_file(self, file):
+        if file and file.size > 10 * 1024 * 1024:
+            raise serializers.ValidationError("File must contain less than 10Mb volume.")
         return file

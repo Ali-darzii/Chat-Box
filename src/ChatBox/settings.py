@@ -148,6 +148,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# todo: need AWS
+MEDIA_ROOT = BASE_DIR / 'uploads'
+MEDIA_URL = '/medias/'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

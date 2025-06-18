@@ -5,10 +5,10 @@ import pytz
 
 class PrivateInfluxDB(InfluxBase):
 
-    def insert(self, box_id, sender_id,message="", file=""):
+    def insert(self, box_id, sender_id, message="", file_url=""):
         message_insert = (Point(f"private_{box_id}")
                           .tag("sender_id", sender_id)
-                          .tag("file", file)
+                          .tag("file", file_url)
                           .tag("message", message)
                           .time(datetime.now(pytz.timezone('Asia/Tehran')), WritePrecision.NS)
                           )

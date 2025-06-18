@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from django.conf import settings
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 from utils.response import ErrorResponses as error
 from private_module.serializers import CreatePrivateBoxSerializer, ListPrivateBoxSerializer, SendPrivateMessageSerialzier
@@ -39,7 +41,7 @@ class CreatePrivatBox(CreateAPIView):
     
     def perform_create(self, serializer):
         first_user = self.request.user
-        second_user_id = serializer.data["second_user"]
+        second_user_id = serializer.validated_data["second_user"]
         if first_user.id == second_user_id:
             return Response(error.BAD_REQUEST, status=status.HTTP_400_BAD_REQUEST)
         serializer.save(first_user=self.request.user)
@@ -47,23 +49,36 @@ class CreatePrivatBox(CreateAPIView):
 
 
 class SendPrivateMessage(APIView):
-    
+    """
+    With sending box_id you send message and file.
+    Authenticated user must be in that box.
+    """
 
     def post(self, request, box_id):
-        serializer = SendPrivateMessageSerialzier(data=request.data, files=request.FILES)
+        serializer = SendPrivateMessageSerialzier(data=request.data)
         serializer.is_valid(raise_exception=True)
-        print(serializer.data)
-        return Response({},status=status.HTTP_200_OK)
-        message = serializer.get("message", "")
-        file = serializer.get("file", "")
-        if file:
-            pass
+        data = serializer.validated_data
+        sender = request.user
+        message = data.get("message", "")
+        file = data.get("file", "")
         
+        try:
+            box = PrivateBox.objects.get(pk=box_id)
+        except:
+            return Response(error.OBJECT_NOT_FOUND, status=status.HTTP_400_BAD_REQUEST)
+
+        if not(box.first_user != sender or box.second_user != sender):
+            return Response(error.BAD_REQUEST, status=status.HTTP_406_NOT_ACCEPTABLE)
+        
+        if file:
+            file_name = default_storage.save(f"pv_files/{file.name}", ContentFile(file.read()))
+            file_url = default_storage.url(file_name)
+
         with PrivateInfluxDB(
             settings.INFLUX_URL,
             settings.INFLUX_AUTH_TOKEN,
             settings.INFLUX_ORG,
             settings.INFLUX_BUCKET) as pv_query:
-            pv_query.insert(box_id=box_id)
+            pv_query.insert(box_id, sender.id, message, file_url)
             
-            
+        return Response({})
