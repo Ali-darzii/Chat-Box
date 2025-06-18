@@ -65,6 +65,6 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
 
         await self.send_json({"online_users": online_users})
 
-    async def chat_message(self, event: dict):
+    async def send_message(self, event: dict):
         message = event["message"]
         await self.send_json(message)

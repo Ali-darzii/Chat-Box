@@ -7,6 +7,8 @@ from rest_framework.views import APIView
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 from utils.response import ErrorResponses as error
 from private_module.serializers import CreatePrivateBoxSerializer, ListPrivateBoxSerializer, SendPrivateMessageSerialzier
@@ -70,6 +72,11 @@ class SendPrivateMessage(APIView):
         if not(box.first_user != sender or box.second_user != sender):
             return Response(error.BAD_REQUEST, status=status.HTTP_406_NOT_ACCEPTABLE)
         
+        if box.first_user == sender:
+            receiver = box.second_user
+        else:
+            receiver = box.first_user
+
         if file:
             file_name = default_storage.save(f"pv_files/{file.name}", ContentFile(file.read()))
             file_url = default_storage.url(file_name)
@@ -80,5 +87,16 @@ class SendPrivateMessage(APIView):
             settings.INFLUX_ORG,
             settings.INFLUX_BUCKET) as pv_query:
             pv_query.insert(box_id, sender.id, message, file_url)
-            
-        return Response({})
+
+        channel_layer = get_channel_layer()
+        notification = {
+            "type":"send_message",
+            "message": {
+                "box_id": box_id,
+                "sender_id": sender.id,
+                "message": message,
+                "file": file_url,
+            }
+        }
+        async_to_sync(channel_layer.group_send)(f"chat_{receiver.id}", notification)
+        return Response({"data":"message sent."}, status=status.HTTP_200_OK)
