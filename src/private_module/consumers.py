@@ -10,16 +10,24 @@ logger = logging.getLogger("django")
 
 
 class ChatConsumer(AsyncJsonWebsocketConsumer):
+    """
+    - Only Authenticated users can connect to ws.
+    - Header needs to be, Authorization: Bearer <token>.
+    - Online users feature works after ping message and after that online users id will send to front.
+    - You can set Online TTL in setting.
+    """
     user: User
     room_group_name: str
+    online_ttl = settings.ONLINE_TTL
 
     async def connect(self):
+
         self.user = self.scope["user"]
         if not self.user.is_authenticated:
             await self.close(code=403)
             return
         self.room_group_name = f"chat_{self.user.id}"
-        await cache.aset(self.room_group_name, "online", timeout=60)
+        await cache.aset(self.room_group_name, "online", timeout=self.online_ttl)
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
         await self.accept()
 
@@ -38,12 +46,11 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             logger.warning(e, exc_info=True)
 
     async def online_users(self, event: dict):
-        online_ttl = settings.ONLINE_TTL
         online_user = await cache.aget(self.room_group_name)
         if online_user is not None:
-            await cache.aset(self.room_group_name, online_user, timeout=online_ttl)
+            await cache.aset(self.room_group_name, online_user, timeout=self.online_ttl)
         else:
-            await cache.aset(self.room_group_name, "online", timeout=online_ttl)
+            await cache.aset(self.room_group_name, "online", timeout=self.online_ttl)
         redis = get_redis_connection("default")
 
         try:
