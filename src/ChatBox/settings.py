@@ -13,7 +13,7 @@ from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 import os
-load_dotenv()
+load_dotenv(override=True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = [override=True
     "daphne",
     'django.contrib.admin',
     'django.contrib.auth',
@@ -94,20 +94,12 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
     }
 }
-
-
-INFLUX_HOST = os.getenv('INFLUX_HOST')
-INFLUX_PORT = os.getenv('INFLUX_PORT')
-INFLUX_AUTH_TOKEN = os.getenv('INFLUX_AUTH_TOKEN')
-INFLUX_ORG = os.getenv('INFLUX_ORG')
-INFLUX_BUCKET = os.getenv('INFLUX_BUCKET')
-INFLUX_URL = f"http://{INFLUX_HOST}:{INFLUX_PORT}"
-
 REDIS_HOST = os.getenv('REDIS_HOST')
 REDIS_PORT = os.getenv('REDIS_PORT')
 REDIS_DB = os.getenv('REDIS_DB')
 
-REDIS_URL = f"valkey://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+REDIS_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+print(REDIS_URL)
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
