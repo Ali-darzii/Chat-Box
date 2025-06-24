@@ -1,8 +1,8 @@
 from django.urls import path
-from private_module import views
+from private_module.api import private
 
 urlpatterns = [
-    path("list/", views.ListPrivateBox.as_view(), name="list_private"),
-    path("create/", views.CreatePrivatBox.as_view(), name="create_private"),
-    path("send-message/<int:box_id>/", views.SendPrivateMessage.as_view(), name="send_pv_message"),
+    path("list/", private.ListPrivateBox.as_view(), name="list_private"),
+    path("create/", private.CreatePrivateBox.as_view(), name="create_private"),
+    path("<int:box_id>/send-message/", private.SendPrivateMessage.as_view(), name="send_pv_message"),
 ]

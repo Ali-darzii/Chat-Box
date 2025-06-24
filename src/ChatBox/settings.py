@@ -106,7 +106,8 @@ INFLUX_URL = f"http://{INFLUX_HOST}:{INFLUX_PORT}"
 REDIS_HOST = os.getenv('REDIS_HOST')
 REDIS_PORT = os.getenv('REDIS_PORT')
 REDIS_DB = os.getenv('REDIS_DB')
-REDIS_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+
+REDIS_URL = f"valkey://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -116,6 +117,8 @@ CACHES = {
         }
     }
 }
+
+
 OTP_TTL = 60
 ONLINE_TTL = 60
 
@@ -160,7 +163,7 @@ AUTH_USER_MODEL = 'auth_module.User'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
