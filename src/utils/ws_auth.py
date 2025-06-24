@@ -11,6 +11,7 @@ from auth_module.models import User
 
 logger = logging.getLogger('django')
 
+
 class JWTAuthMiddleware(BaseMiddleware):
     async def __call__(self, scope, receive, send):
         token_key = dict(scope['headers']).get(b'authorization').decode('utf-8')
@@ -23,14 +24,17 @@ class JWTAuthMiddleware(BaseMiddleware):
     @database_sync_to_async
     def get_user(self, token_key):
         try:
-            user, _ = JWTAuthentication().authenticate(Request(token_key))
+            user = JWTAuthentication().authenticate(Request(token_key))
             if user:
-                return user
+                return user[0]
+            return AnonymousUser()
         except User.DoesNotExist:
             return AnonymousUser()
 
+
 class Request:
     """ Mocking request"""
+
     def __init__(self, token_key):
         self.META = {'HTTP_AUTHORIZATION': f'{token_key}'}
 

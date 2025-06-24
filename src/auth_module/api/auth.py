@@ -128,8 +128,6 @@ class CustomTokenPairView(TokenObtainPairView):
         response = super().post(request, *args, **kwargs)
         try:
             refresh_token = response.data["refresh"]
-            if not refresh_token:
-                raise
             response.set_cookie(
                 "refresh",
                 refresh_token,
