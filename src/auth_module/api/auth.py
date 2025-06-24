@@ -125,8 +125,8 @@ class CustomTokenPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
     def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
         try:
-            response = super().post(request, *args, **kwargs)
             refresh_token = response.data["refresh"]
             if not refresh_token:
                 raise
