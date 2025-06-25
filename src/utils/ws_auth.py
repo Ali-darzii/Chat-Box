@@ -28,7 +28,7 @@ class JWTAuthMiddleware(BaseMiddleware):
             if user:
                 return user[0]
             return AnonymousUser()
-        except User.DoesNotExist:
+        except Exception:
             return AnonymousUser()
 
 

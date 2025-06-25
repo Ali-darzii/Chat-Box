@@ -4,7 +4,7 @@ from django.core.files.base import ContentFile
 from django.db import IntegrityError as UniqueError
 
 from utils.response import ErrorResponses as error
-from private_module.models import PrivateBox
+from private_module.models import PrivateBox, PrivateMessage
 from auth_module.models import User
 
 class UserSerializer(serializers.ModelSerializer):
@@ -27,22 +27,6 @@ class ListPrivateBoxSerializer(serializers.ModelSerializer):
         front_user =  instance.first_user if instance.second_user == auth_user else instance.second_user
         serializer = UserSerializer(front_user)
         return serializer.data
-    
-class CreatePrivateBoxSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-            model = PrivateBox
-            exclude = ("first_user",)
-
-    def create(self, validated_data):
-        user = self.context["request"].user
-        second_user = validated_data["second_user"]
-        if user.id == second_user.id:
-            raise serializers.ValidationError(error.BAD_REQUEST)
-        try:
-            return super().create(validated_data)
-        except UniqueError:
-            raise serializers.ValidationError(error.BAD_REQUEST)
 
 
 
@@ -70,22 +54,18 @@ class SendPrivateMessageSerializer(serializers.Serializer):
 
         return file
 
-
-class GetPrivateMessagesInputSerialzier(serializers.Serializer):
-    start = serializers.IntegerField(min_value=0)
-    stop = serializers.IntegerField(min_value=10)
-    is_file = serializers.BooleanField(default=False, required=False)
-
-
-class PrivateBoxMessagesSerialzier(serializers.Serializer):
-    id = serializers.CharField()
-    datetime = serializers.IntegerField()
-    message = serializers.CharField()
-    file = serializers.CharField()
+class UserPrivateMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("phone_no","first_name", "avatar")
 
 
-class EditPrivateMessageInputSerializer(serializers.Serializer):
-    log_id = serializers.CharField()
-    start = serializers.IntegerField()
-    stop = serializers.IntegerField()
-    is_delete = serializers.BooleanField(default=False, required=False)
+
+
+class PrivateMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PrivateMessage
+        exclude = ("updated_at",)
+
+    box = serializers.IntegerField(source="box.id")
+    sender = UserPrivateMessageSerializer()

@@ -14,8 +14,8 @@ class PrivateBox(models.Model):
         ordering = ("-last_message",)
 
 class PrivateMessage(models.Model):
-    message = models.TextField()
-    file = models.FileField(upload_to="pv_files/")
+    message = models.TextField(blank=True, null=True)
+    file = models.FileField(upload_to="pv_files/", blank=True, null=True)
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sender")
     box = models.ForeignKey(PrivateBox, on_delete=models.CASCADE, related_name="box")
     updated_at = models.DateTimeField(auto_now=True)
@@ -23,4 +23,4 @@ class PrivateMessage(models.Model):
     is_read = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ("-updated_at",)
+        ordering = ("-created_at",)

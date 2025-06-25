@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
+    "django_filters",
 
     # Internal
     "auth_module",
@@ -185,7 +186,9 @@ REST_FRAMEWORK = {
         'user-exist': '30/minute',
         'send-otp': '5/minute',
         'check-otp': '10/minute',
-    }
+    },
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+
 }
 SMS_SERVICE_DOMAIN = "https://api.limosms.com/api/sendpatternmessage"
 SMS_SERVICE_API_KEY = os.getenv('SMS_SERVICE_API_KEY')
