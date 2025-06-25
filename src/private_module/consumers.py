@@ -8,6 +8,7 @@ from auth_module.models import User
 
 logger = logging.getLogger("django")
 
+# TODO: Online Users hase issue
 
 class ChatConsumer(AsyncJsonWebsocketConsumer):
     """
@@ -27,7 +28,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             await self.close(code=403)
             return
         self.room_group_name = f"chat_{self.user.id}"
-        await cache.aset(self.room_group_name, "online", timeout=self.online_ttl)
+        cache.set(self.room_group_name, "online", timeout=self.online_ttl)
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
         await self.accept()
 
@@ -46,11 +47,11 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             logger.warning(e, exc_info=True)
 
     async def online_users(self, event: dict):
-        online_user = await cache.aget(self.room_group_name)
+        online_user = cache.get(self.room_group_name)
         if online_user is not None:
-            await cache.aset(self.room_group_name, online_user, timeout=self.online_ttl)
+            cache.set(self.room_group_name, online_user, timeout=self.online_ttl)
         else:
-            await cache.aset(self.room_group_name, "online", timeout=self.online_ttl)
+            cache.set(self.room_group_name, "online", timeout=self.online_ttl)
         redis = get_redis_connection("default")
 
         try:
@@ -58,18 +59,18 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             online_users = []
 
             while True:
-                cursor, keys = await redis.scan(cursor=cursor, match="chat_*", count=100)
+                cursor, keys = redis.scan(cursor=cursor, count=100)
                 for key in keys:
-                    value = await redis.get(key)
-                    if value == b"online":
-                        user_id = key.decode().replace("chat_", "")
-                        online_users.append(user_id)
+                    value = redis.get(key)
+                    online_users.append(value.decode())
+
                 if cursor == 0:
                     break
 
         except Exception as e:
             logger.warning("Error retrieving online users: %s", e, exc_info=True)
             online_users = []
+        print(online_users)
 
         await self.send_json({"online_users": online_users})
 

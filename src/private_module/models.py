@@ -19,6 +19,8 @@ class PrivateMessage(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sender")
     box = models.ForeignKey(PrivateBox, on_delete=models.CASCADE, related_name="box")
     updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
 
     class Meta:
         ordering = ("-updated_at",)

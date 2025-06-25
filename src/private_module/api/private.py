@@ -84,7 +84,6 @@ class SendPrivateMessage(APIView):
             receiver = box.first_user
 
         channel_layer = get_channel_layer()
-        print(channel_layer)
         notification = {
             "type":"send_message",
             "message": {
