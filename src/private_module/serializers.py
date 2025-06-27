@@ -56,30 +56,6 @@ class SendPrivateMessageSerializer(serializers.Serializer):
 
         return file
 
-    def create(self, validated_data):
-        sender = self.context["request"].user
-        message = validated_data.pop("message", "")
-        file_url = validated_data.pop("file", "")
-        box_id = validated_data.pop("box_id")
-        receiver_id = validated_data.pop("second_user_id")
-        try:
-            if box_id:
-                box = PrivateBox.objects.get(pk=box_id)
-            else:
-                # rare case
-                box = PrivateBox.objects.create(first_user=sender, second_user_id=receiver_id)
-        except PrivateBox.DoesNotExist:
-            raise NotFound
-        except UniqueError:
-            raise serializers.ValidationError(error.BAD_REQUEST)
-
-        if not (box.first_user != sender or box.second_user != sender):
-            raise PermissionDenied
-
-        box.last_message = timezone.now()
-        box.save()
-        return PrivateMessage.objects.create(message=message, file=file_url, sender=sender, box=box)
-
 
 class PrivateMessageSerializer(serializers.ModelSerializer):
     class Meta:
