@@ -54,3 +54,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         token['phone_no'] = user.phone_no
         return token
+
+
+class OTPResetPasswordSerializer(OTPCheckSerializer):
+    password = serializers.CharField(max_length=128)

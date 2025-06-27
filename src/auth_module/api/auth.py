@@ -12,7 +12,8 @@ import logging
 from auth_module.models import User
 from auth_module.tasks import send_sms
 from utils.response import ErrorResponses as error
-from auth_module.serializers import OTPSendSerializer, OTPCheckSerializer, CustomTokenObtainPairSerializer
+from auth_module.serializers import OTPSendSerializer, OTPCheckSerializer, CustomTokenObtainPairSerializer, \
+    OTPResetPasswordSerializer
 from utils.throttle import SendOTPThrottle, CheckOTPThrottle, UserExistThrottle
 from utils.utils import generate_tk
 
@@ -178,3 +179,42 @@ class Logout(APIView):
         except Exception as e:
             logger.critical(e, exc_info=True)
             return Response(error.SOMETHING_WENT_WRONG, status=status.HTTP_400_BAD_REQUEST)
+
+
+class OTPResetPassword(APIView):
+    """
+    - For sending otp we will use OTPView.
+    - This api is just for checking and resetting user password.
+
+
+    """
+    def put(self, request):
+        serializer = OTPResetPasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        phone_no = data["phone_no"]
+        tk = data["tk"]
+        password = data["password"]
+
+        db_tk = redis.get(f"otp_{phone_no}")
+        if not db_tk or db_tk != tk:
+            return Response(error.CODE_IS_EXPIRED_OR_INVALID, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = User.objects.get(phone_no=phone_no)
+            user.set_password(password)
+            user.last_login = timezone.now()
+            user.save()
+        except User.DoesNotExist:
+            return Response(error.TOKEN_IS_EXPIRED_OR_INVALID, status=status.HTTP_400_BAD_REQUEST)
+
+        refresh_token = str(RefreshToken.for_user(user))
+        jwt = {
+            "access": str(AccessToken.for_user(user)),
+            "refresh": refresh_token,
+            "user_id": user.id,
+        }
+        response = Response(jwt, status=status.HTTP_200_OK)
+        response.set_cookie("refresh", refresh_token, httponly=True, secure=request.is_secure())
+
+        return response
