@@ -8,7 +8,7 @@ class UpdateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "username", "phone_no", "avatar")
+        fields = ("first_name", "last_name", "username", "phone_no")
 
 class AvatarSerializer(serializers.ModelSerializer):
     class Meta:
