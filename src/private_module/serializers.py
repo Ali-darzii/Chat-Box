@@ -100,8 +100,7 @@ class EditPrivateMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrivateMessage
         fields = ("id", "message", "is_delete")
-
-    id = serializers.IntegerField(read_only=True)
+        
     is_delete = serializers.BooleanField(required=False)
 
     def validate_is_delete(self, is_delete):
