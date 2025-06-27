@@ -1,3 +1,4 @@
 from django.contrib import admin
+from user_module.models import UserAvatar
 
-# Register your models here.
+admin.site.register(UserAvatar)

@@ -72,7 +72,7 @@ class OTPView(APIView):
         try:
             user = User(
                 phone_no=phone_no,
-                username=data["username"],
+                username=data.get("username", None),
                 first_name=data["first_name"],
                 last_name=data["last_name"],
             )
