@@ -93,7 +93,7 @@ class ListPrivateMessages(ListAPIView):
         if not (sender == box.second_user or sender == box.first_user):
             raise PermissionDenied
 
-        return PrivateMessage.objects.filter(box=box).order_by("-created_at")
+        return PrivateMessage.objects.filter(box=box, is_delete=False).order_by("-created_at")
 
     def filter_queryset(self, queryset):
         messages = super().filter_queryset(queryset)
