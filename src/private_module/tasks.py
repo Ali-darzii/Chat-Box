@@ -23,10 +23,10 @@ def create_private_box(user_id:int):
     try:
         PrivateBox.objects.bulk_create(private_boxes, ignore_conflicts=True)
     except UniqueError as e:
-        logger.error(f"UniqueError first_user_id: {user_id} second_user_id:{user.id} \n\n {e}")
+        logger.error(f"UniqueError user id: {user_id} \n\n {e}")
 
     except Exception as e:
-        logger.critical(f"UnknownError first_user_id: {user_id} second_user_id:{user.id} \n\n {e}")
+        logger.critical(f"UnknownError user_id: {user_id} \n\n {e}")
 
     logger.info(f"Creating private box for user {user_id} Finished.")
 
