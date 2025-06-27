@@ -1,22 +1,22 @@
-from django.http import Http404
-from rest_framework.exceptions import PermissionDenied
+from rest_framework.exceptions import PermissionDenied, NotFound, ValidationError
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.generics import ListAPIView, UpdateAPIView
+from rest_framework.views import APIView
 from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.views import APIView
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
-from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
-from private_module.helper.filter import PrivateMessageFilter
+from django.db import IntegrityError as UniqueError
+from django.utils import timezone
 
-from utils.response import ErrorResponses as error
+from private_module.helper.filter import PrivateMessageFilter
 from private_module.serializers import (
     ListPrivateBoxSerializer,
     SendPrivateMessageSerializer,
     PrivateMessageSerializer,
+    EditPrivateMessageSerializer,
 
 )
 from private_module.models import PrivateBox, PrivateMessage
@@ -27,38 +27,38 @@ class ListPrivateBox(ListAPIView):
     serializer_class = ListPrivateBoxSerializer
 
     def get_queryset(self):
+        user = self.request.user
         return PrivateBox.objects.filter(
-            Q(first_user=self.request.user) | Q(second_user=self.request.user)
+            Q(first_user=user) | Q(second_user=user)
         ).order_by("-last_message")
 
 
 class SendPrivateMessage(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def post(self, request, box_id):
+    def post(self, request):
         serializer = SendPrivateMessageSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
         sender = request.user
-        message = data.get("message", "")
-        file_url = data.get("file", "")
+        message = data.pop("message", None)
+        file_url = data.pop("file", None)
+        box_id = data.pop("box_id")
+        receiver_id = data.pop("receiver_id")
 
         try:
-            box, _ = PrivateBox.objects.get_or_create(
-                pk=box_id,
-                defaults={"first_user": request.user, "second_user": sender}
-            )
+            if box_id:
+                box = PrivateBox.objects.get(pk=box_id)
+            else:
+                # rare case
+                box = PrivateBox.objects.create(first_user=sender, second_user_id=receiver_id)
         except PrivateBox.DoesNotExist:
-            raise Http404
-
+            raise NotFound
+        except UniqueError:
+            raise ValidationError
 
         if not (box.first_user != sender or box.second_user != sender):
-            return Response(error.BAD_REQUEST, status=status.HTTP_406_NOT_ACCEPTABLE)
-        if box.first_user == sender:
-            receiver = box.second_user
-        else:
-            receiver = box.first_user
-
+            raise PermissionDenied
 
         box.last_message = timezone.now()
         box.save()
@@ -68,17 +68,17 @@ class SendPrivateMessage(APIView):
         notification = {
             "type": "send_message",
             "message": {
-                "box_id": box_id,
+                "box_id": box.id,
                 "sender_id": sender.id,
                 "message": message,
                 "file": file_url,
             }
         }
-        async_to_sync(channel_layer.group_send)(f"chat_{receiver.id}", notification)
+        async_to_sync(channel_layer.group_send)(f"chat_{receiver_id}", notification)
         return Response({"data": "message sent."}, status=status.HTTP_200_OK)
 
 
-class GetPrivateMessages(ListAPIView):
+class ListPrivateMessages(ListAPIView):
     serializer_class = PrivateMessageSerializer
     permission_classes = (IsAuthenticated,)
     filter_backends = [DjangoFilterBackend]
@@ -88,14 +88,22 @@ class GetPrivateMessages(ListAPIView):
         try:
             box = PrivateBox.objects.get(pk=self.kwargs["box_id"])
         except box.DoesNotExist:
-            raise Http404
+            raise NotFound
         sender = self.request.user
         if not (sender == box.second_user or sender == box.first_user):
             raise PermissionDenied
 
         return PrivateMessage.objects.filter(box=box).order_by("-created_at")
 
+    def filter_queryset(self, queryset):
+        messages = super().filter_queryset(queryset)
+        messages.update(is_read=True)
+        return messages
 
-class EditPrivateMessage(APIView):
-    def put(self, request, box_id: str):
-        pass
+
+class EditPrivateMessage(UpdateAPIView):
+    serializer_class = EditPrivateMessageSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return PrivateMessage.objects.filter(sender=self.request.user)

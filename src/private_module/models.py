@@ -21,6 +21,7 @@ class PrivateMessage(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
+    is_delete = models.BooleanField(default=False)
 
     class Meta:
         ordering = ("-created_at",)
