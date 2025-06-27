@@ -11,7 +11,7 @@ from private_module.models import PrivateBox, PrivateMessage
 from auth_module.models import User
 
 
-class UserSerializer(serializers.ModelSerializer):
+class PrivateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("id","phone_no", "first_name", "avatar")
@@ -27,7 +27,7 @@ class ListPrivateBoxSerializer(serializers.ModelSerializer):
     def get_user(self, instance):
         auth_user = self.context["request"].user
         front_user = instance.first_user if instance.second_user == auth_user else instance.second_user
-        serializer = UserSerializer(front_user)
+        serializer = PrivateUserSerializer(front_user)
         return serializer.data
 
 
@@ -81,26 +81,20 @@ class SendPrivateMessageSerializer(serializers.Serializer):
         return PrivateMessage.objects.create(message=message, file=file_url, sender=sender, box=box)
 
 
-class UserPrivateMessageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ("id", "phone_no", "first_name", "avatar")
-
-
 class PrivateMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrivateMessage
         exclude = ("updated_at",)
 
     box = serializers.IntegerField(source="box.id")
-    sender = UserPrivateMessageSerializer()
+    sender = PrivateUserSerializer()
 
 
 class EditPrivateMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrivateMessage
         fields = ("id", "message", "is_delete")
-        
+
     is_delete = serializers.BooleanField(required=False)
 
     def validate_is_delete(self, is_delete):
