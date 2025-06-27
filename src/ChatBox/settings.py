@@ -13,7 +13,7 @@ from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 import os
-load_dotenv()
+load_dotenv(override=True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,12 +28,13 @@ SECRET_KEY = 'django-insecure-_w2_)be@=!0ht!_odc0zmwsjcr%k%v1q2r_otbm=o)lue=xi&n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,9 +45,11 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
+    "django_filters",
 
     # Internal
     "auth_module",
+    "private_module",
 ]
 
 MIDDLEWARE = [
@@ -76,13 +79,12 @@ TEMPLATES = [
         },
     },
 ]
-
+ASGI_APPLICATION = "ChatBox.asgi.application"
 WSGI_APPLICATION = 'ChatBox.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -93,8 +95,11 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
     }
 }
+REDIS_HOST = os.getenv('REDIS_HOST')
+REDIS_PORT = os.getenv('REDIS_PORT')
+REDIS_DB = os.getenv('REDIS_DB')
 
-REDIS_URL = f"redis://{os.getenv("REDIS_HOST")}:{os.getenv("REDIS_PORT")}/{os.getenv("REDIS_DB")}"
+REDIS_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -104,7 +109,20 @@ CACHES = {
         }
     }
 }
-OTP_TIMEOUT_DURATION = 60
+
+
+OTP_TTL = 60
+ONLINE_TTL = 60
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(os.getenv("REDIS_HOST"), os.getenv("REDIS_PORT"))],
+        },
+    },
+}
+
 
 
 # Password validation
@@ -125,6 +143,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# todo: need AWS
+MEDIA_ROOT = BASE_DIR / 'uploads'
+MEDIA_URL = '/medias/'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -133,7 +155,7 @@ AUTH_USER_MODEL = 'auth_module.User'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -164,9 +186,10 @@ REST_FRAMEWORK = {
         'user-exist': '30/minute',
         'send-otp': '5/minute',
         'check-otp': '10/minute',
-    }
-}
+    },
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 
+}
 SMS_SERVICE_DOMAIN = "https://api.limosms.com/api/sendpatternmessage"
 SMS_SERVICE_API_KEY = os.getenv('SMS_SERVICE_API_KEY')
 
@@ -185,44 +208,44 @@ SIMPLE_JWT = {
 
 LOGS_DIR = os.path.join(PROJECT_ROOT, 'log/python/chat-box/')
 
-LOGGING = {
-    'version':1,
-    'disable_existing_loggers': False,
-    'loggers':{
-        'django':{
-            'handlers':['warning','error', 'info'],
-        }
-    },
-    'handlers':{
-        'warning':{
-            'level':'WARNING',
-            'class': 'logging.handlers.TimedRotatingFileHandler',
-            'when': 'midnight',
-            'filename': f'{LOGS_DIR}/warning.log',
-            'formatter':'simpleRe',
-        },
-        'error':{
-            'level':'ERROR',
-            'class': 'logging.handlers.TimedRotatingFileHandler',
-            'when': 'midnight',
-            'filename': f'{LOGS_DIR}/error.log',
-            'formatter':'simpleRe',
-        },'info':{
-            'level':'INFO',
-            'class': 'logging.handlers.TimedRotatingFileHandler',
-            'when': 'midnight',
-            'filename': f'{LOGS_DIR}/info.log',
-            'formatter':'simpleRe',
-        }
-    },
-    'formatters':{
-        'simpleRe': {
-            'format': '{levelname} {asctime} {pathname} {module} {lineno} - {message}',
-            'style': '{',
-        }
-
-    }
-}
+# LOGGING = {
+#     'version':1,
+#     'disable_existing_loggers': False,
+#     'loggers':{
+#         'django':{
+#             'handlers':['warning','error', 'info'],
+#         }
+#     },
+#     'handlers':{
+#         'warning':{
+#             'level':'WARNING',
+#             'class': 'logging.handlers.TimedRotatingFileHandler',
+#             'when': 'midnight',
+#             'filename': f'{LOGS_DIR}/warning.log',
+#             'formatter':'simpleRe',
+#         },
+#         'error':{
+#             'level':'ERROR',
+#             'class': 'logging.handlers.TimedRotatingFileHandler',
+#             'when': 'midnight',
+#             'filename': f'{LOGS_DIR}/error.log',
+#             'formatter':'simpleRe',
+#         },'info':{
+#             'level':'INFO',
+#             'class': 'logging.handlers.TimedRotatingFileHandler',
+#             'when': 'midnight',
+#             'filename': f'{LOGS_DIR}/info.log',
+#             'formatter':'simpleRe',
+#         }
+#     },
+#     'formatters':{
+#         'simpleRe': {
+#             'format': '{levelname} {asctime} {pathname} {module} {lineno} - {message}',
+#             'style': '{',
+#         }
+#
+#     }
+# }
 CELERY_BROKER_URL = REDIS_URL
 CELERY_RESULT_BACKEND = REDIS_URL
 CELERY_RESULT_EXPIRES = timedelta(minutes=1)

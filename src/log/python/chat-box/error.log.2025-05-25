@@ -1,0 +1,25 @@
+CRITICAL 2025-05-25 16:35:12,451 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 28 - <class 'str'>
+ERROR 2025-05-25 16:35:33,145 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 28 - <class 'str'>
+ERROR 2025-05-25 16:35:35,905 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 28 - <class 'str'>
+ERROR 2025-05-25 16:35:43,989 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 28 - <class 'str'>
+ERROR 2025-05-25 16:35:45,148 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 28 - <class 'str'>
+ERROR 2025-05-25 16:35:51,180 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 28 - <class 'str'>
+CRITICAL 2025-05-25 16:41:22,758 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 33 - {
+    "message":"ss"
+}
+CRITICAL 2025-05-25 16:41:31,625 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 33 - {
+    "message":"ss"
+}
+CRITICAL 2025-05-25 16:42:18,675 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 33 - {
+    "message":"ss"
+}
+CRITICAL 2025-05-25 16:42:37,705 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 33 - {
+    "message":"ss"
+}
+CRITICAL 2025-05-25 16:42:38,334 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 33 - {
+    "message":"ss"
+}
+CRITICAL 2025-05-25 16:42:39,613 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 33 - {
+    "message":"ss"
+}
+CRITICAL 2025-05-25 16:47:42,325 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 30 - sSSSSSSSSSs ss

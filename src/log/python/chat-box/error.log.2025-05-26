@@ -1,0 +1,14 @@
+CRITICAL 2025-05-26 16:54:21,619 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - RedisChannelLayer(hosts=[{'host': 'localhost', 'port': '6379'}])
+CRITICAL 2025-05-26 16:54:41,672 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - SSSsssss RedisChannelLayer(hosts=[{'host': 'localhost', 'port': '6379'}])
+CRITICAL 2025-05-26 16:55:16,488 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - SSSsssss RedisChannelLayer(hosts=[{'host': 'localhost', 'port': '6379'}])
+CRITICAL 2025-05-26 16:55:26,690 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - SSSsssss []
+CRITICAL 2025-05-26 16:55:56,795 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 23 - SSSsssss []
+CRITICAL 2025-05-26 16:56:03,886 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 23 - SSSssssfs []
+CRITICAL 2025-05-26 17:25:21,793 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - SSSssssfs []
+CRITICAL 2025-05-26 17:26:12,076 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - SSSssssfs []
+CRITICAL 2025-05-26 17:26:21,622 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - SSSssssfs []
+CRITICAL 2025-05-26 17:26:30,526 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - SSSssssfs []
+CRITICAL 2025-05-26 17:29:23,593 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 34 - SSSssssfs RedisChannelLayer(hosts=[{'host': 'localhost', 'port': '6379'}])
+CRITICAL 2025-05-26 17:38:03,765 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 17 - None Sffffs
+CRITICAL 2025-05-26 17:54:10,250 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - None Sffffs
+CRITICAL 2025-05-26 17:54:18,605 /home/ali/Desktop/Django/ChatBox/src/private_module/consumers.py consumers 22 - None Sffffs

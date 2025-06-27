@@ -12,3 +12,4 @@ class ErrorResponses:
     TOKEN_IS_EXPIRED_OR_INVALID = {'detail': 'TOKEN_IS_EXPIRED_OR_INVALID', 'error_code': 5}
     CODE_IS_EXPIRED_OR_INVALID = {'detail': 'CODE_IS_EXPIRED_OR_INVALID', 'error_code': 6}
     SOMETHING_WENT_WRONG = {'detail': "WE_ALSO_DON'T_KNOW_WHAT_HAPPENED!", 'error_code': 7}
+    BAD_REQUEST = {"detail":"BAD_REQUEST", "error_code": 8}
