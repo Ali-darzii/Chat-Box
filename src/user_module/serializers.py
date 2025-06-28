@@ -27,18 +27,6 @@ class GetUserDetailSerializer(serializers.ModelSerializer):
         serializer =  AvatarSerializer(obj.avatars.filter(is_delete=False), many=True)
         return serializer.data
 
-class GetUserListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ("first_name", "last_name", "username", "phone_no", "avatar")
-
-    avatar = serializers.SerializerMethodField()
-
-    def get_avatar(self, obj):
-        serializer =  AvatarSerializer(obj.avatars.filter(is_delete=False).order_by("-created_at").last())
-        return serializer.data
-
-
 class AddAvatarSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAvatar
