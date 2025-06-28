@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "auth_module",
     "private_module",
     "user_module",
+    "group_module",
 ]
 
 MIDDLEWARE = [

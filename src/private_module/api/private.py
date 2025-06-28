@@ -68,6 +68,7 @@ class SendPrivateMessage(APIView):
         notification = {
             "type": "send_message",
             "message": {
+                "type": "private",
                 "box_id": box.id,
                 "sender_id": sender.id,
                 "message": message,

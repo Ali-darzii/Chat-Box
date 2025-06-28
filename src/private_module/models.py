@@ -1,6 +1,8 @@
 from django.db import models
 
 from django.utils import timezone
+from reactivex.operators import first
+
 from auth_module.models import User
 
 
@@ -8,6 +10,9 @@ class PrivateBox(models.Model):
     first_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="first_user")
     second_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="second_user")
     last_message = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return  f"{self.first_user} - {self.second_user}"
 
     class Meta:
         unique_together = ("first_user", "second_user")
@@ -22,6 +27,10 @@ class PrivateMessage(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
     is_delete = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.sender} - {self.box}"
+
 
     class Meta:
         ordering = ("-created_at",)
