@@ -10,6 +10,6 @@ router.register("private/avatar", user.PrivateAvatarViewSet, basename="avatar")
 
 urlpatterns = [
     path("private/edit/", user.PrivateEditUser.as_view(), name="edit_user"),
-    path("public/<int:pk>/detail/", user.PublicGetUserDetail.as_view(), name="edit_user"),
+    path("public/<int:pk>/detail/", user.PublicUserDetail.as_view(), name="edit_user"),
 
 ] + router.urls

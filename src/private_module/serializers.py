@@ -12,10 +12,10 @@ from private_module.models import PrivateBox, PrivateMessage
 from auth_module.models import User
 
 
-class PrivateUserSerializer(serializers.ModelSerializer):
+class ChatUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "username", "phone_no", "avatar")
+        fields = ("id","first_name", "last_name", "username", "phone_no", "avatar")
 
     avatar = serializers.SerializerMethodField()
 
@@ -34,7 +34,7 @@ class ListPrivateBoxSerializer(serializers.ModelSerializer):
     def get_user(self, instance):
         auth_user = self.context["request"].user
         front_user = instance.first_user if instance.second_user == auth_user else instance.second_user
-        serializer = PrivateUserSerializer(front_user)
+        serializer = ChatUserSerializer(front_user)
         return serializer.data
 
 
@@ -70,7 +70,7 @@ class PrivateMessageSerializer(serializers.ModelSerializer):
         exclude = ("updated_at",)
 
     box = serializers.IntegerField(source="box.id")
-    sender = PrivateUserSerializer()
+    sender = ChatUserSerializer()
 
 
 class EditPrivateMessageSerializer(serializers.ModelSerializer):

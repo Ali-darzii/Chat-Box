@@ -1,21 +1,26 @@
 from rest_framework import serializers
 
-from group_module.models import GroupBox, GroupBox, GroupBoxAvatar
+from group_module.models import GroupBox, GroupBoxAvatar
 from utils.response import ErrorResponses as error
-
+from private_module.serializers import ChatUserSerializer
 
 class GroupAvatarSerializer(serializers.ModelSerializer):
     class Meta:
         model = GroupBoxAvatar
-        exclude = ("group",)
+        fields = "__all__"
 
 
 class CreateGroupBoxSerializer(serializers.ModelSerializer):
     class Meta:
         model = GroupBox
-        fields = ("name", "users", "admins", "avatar")
+        fields = "__all__"
 
-    avatar = serializers.ImageField(required=False)
+    avatar = serializers.ImageField(required=False, write_only=True)
+    avatar_url = serializers.SerializerMethodField(read_only=True)
+
+    def get_avatar_url(self, obj):
+        group_avatar = obj.group_avatars.last()
+        return group_avatar.avatar.url if group_avatar else None
 
     def validate(self, attrs):
         user = self.context['request'].user
@@ -34,3 +39,17 @@ class CreateGroupBoxSerializer(serializers.ModelSerializer):
         if avatar:
             GroupBoxAvatar.objects.create(group=group, avatar=avatar)
         return group
+
+
+
+class GroupBoxDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GroupBox
+        fields = "__all__"
+
+    users = ChatUserSerializer(many=True)
+    avatars = serializers.SerializerMethodField()
+
+    def get_avatars(self, obj):
+        serializer = GroupAvatarSerializer(obj.group_avatars.all(), many=True)
+        return serializer.data

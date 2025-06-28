@@ -11,7 +11,7 @@ Private API's have only authenticated user access.
 """
 
 
-class PublicGetUserDetail(RetrieveAPIView):
+class PublicUserDetail(RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = GetUserDetailSerializer
     queryset = User.objects.all()
