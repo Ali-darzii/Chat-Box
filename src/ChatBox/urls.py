@@ -23,6 +23,7 @@ urls = [
     path('admin/', admin.site.urls),
     path("auth/", include("auth_module.urls")),
     path("private/", include("private_module.urls")),
+    path("user/", include("user_module.urls")),
 ]
 
 urlpatterns = [

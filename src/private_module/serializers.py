@@ -6,6 +6,7 @@ from rest_framework.exceptions import NotFound
 from django.utils import timezone
 from django.db import IntegrityError as UniqueError
 
+from user_module.serializers import AvatarSerializer
 from utils.response import ErrorResponses as error
 from private_module.models import PrivateBox, PrivateMessage
 from auth_module.models import User
@@ -14,7 +15,13 @@ from auth_module.models import User
 class PrivateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id","phone_no", "first_name", "avatar")
+        fields = ("first_name", "last_name", "username", "phone_no", "avatar")
+
+    avatar = serializers.SerializerMethodField()
+
+    def get_avatar(self, obj):
+        serializer =  AvatarSerializer(obj.avatars.filter(is_delete=False).order_by("-created_at").last())
+        return serializer.data
 
 
 class ListPrivateBoxSerializer(serializers.ModelSerializer):

@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, User
 from django.apps import apps
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.hashers import make_password
@@ -54,12 +54,6 @@ class User(AbstractUser):
 
     USERNAME_FIELD = "phone_no"
     REQUIRED_FIELDS = []
-
-
-class Profile(models.Model):
-    # TODO: implant later in user module
-    pass
-
 
 @receiver(post_save, sender=User)
 def create_related_object(sender, instance, created, **kwargs):
