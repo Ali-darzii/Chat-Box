@@ -1,10 +1,6 @@
-from django.core.exceptions import PermissionDenied
 from rest_framework import serializers
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-from rest_framework.exceptions import NotFound
-from django.utils import timezone
-from django.db import IntegrityError as UniqueError
 
 from user_module.serializers import AvatarSerializer
 from utils.response import ErrorResponses as error

@@ -30,7 +30,7 @@ class ListPrivateBox(ListAPIView):
         user = self.request.user
         return PrivateBox.objects.filter(
             Q(first_user=user) | Q(second_user=user)
-        ).order_by("-last_message")
+        ).select_related("first_user", "second_user").order_by("-last_message")
 
 
 class SendPrivateMessage(APIView):
