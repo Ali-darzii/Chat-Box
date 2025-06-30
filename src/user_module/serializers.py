@@ -61,8 +61,8 @@ class AddAvatarSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
     def update(self, instance, validated_data):
-        is_delete = validated_data.get("is_delete")
-        if is_delete is None:
+        is_delete = validated_data["is_delete"]
+        if instance.is_delete and not is_delete:
             raise serializers.ValidationError(error.BAD_FORMAT)
         data = {"is_delete": is_delete}
         return super().update(instance, data)

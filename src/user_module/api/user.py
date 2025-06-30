@@ -22,7 +22,6 @@ class PublicUserDetail(RetrieveAPIView):
             Q(first_user=user)| Q(second_user=user)
         ).select_related("first_user", "second_user").order_by("-id")
 
-
 class PrivateEditUser(UpdateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = UpdateUserSerializer
