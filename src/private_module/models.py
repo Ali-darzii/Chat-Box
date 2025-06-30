@@ -12,11 +12,14 @@ class PrivateBox(models.Model):
     last_message = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return  f"{self.first_user} - {self.second_user}"
+        return f"{self.first_user} - {self.second_user}"
 
     class Meta:
         unique_together = ("first_user", "second_user")
         ordering = ("-last_message",)
+
+    def receiver(self, sender: User):
+        return self.second_user if self.first_user == sender else self.first_user
 
 class PrivateMessage(models.Model):
     message = models.TextField(blank=True, null=True)
@@ -30,7 +33,6 @@ class PrivateMessage(models.Model):
 
     def __str__(self):
         return f"{self.sender} - {self.box}"
-
 
     class Meta:
         ordering = ("-created_at",)

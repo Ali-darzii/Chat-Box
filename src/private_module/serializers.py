@@ -29,7 +29,7 @@ class ListPrivateBoxSerializer(serializers.ModelSerializer):
 
     def get_user(self, instance):
         auth_user = self.context["request"].user
-        front_user = instance.first_user if instance.second_user == auth_user else instance.second_user
+        front_user = instance.receiver(auth_user)
         serializer = ChatUserSerializer(front_user)
         return serializer.data
 
@@ -80,3 +80,5 @@ class EditPrivateMessageSerializer(serializers.ModelSerializer):
         if is_delete:
             raise serializers.ValidationError(error.BAD_FORMAT)
         return is_delete
+class PrivateMessageIsReadSerializer(serializers.Serializer):
+    box_id = serializers.IntegerField(min_value=1)

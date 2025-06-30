@@ -41,7 +41,7 @@ class GetUserDetailSerializer(serializers.ModelSerializer):
 
     def get_user(self, instance):
         auth_user = self.context["request"].user
-        front_user = instance.first_user if instance.second_user == auth_user else instance.second_user
+        front_user = instance.receiver(auth_user)
         serializer = UserDetailSerializer(front_user)
         return serializer.data
 

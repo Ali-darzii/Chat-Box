@@ -1,3 +1,4 @@
+from django.utils.functional import cached_property
 from rest_framework.exceptions import PermissionDenied, NotFound, ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import ListAPIView, UpdateAPIView
@@ -16,7 +17,7 @@ from private_module.serializers import (
     ListPrivateBoxSerializer,
     SendPrivateMessageSerializer,
     PrivateMessageSerializer,
-    EditPrivateMessageSerializer,
+    EditPrivateMessageSerializer, PrivateMessageIsReadSerializer,
 
 )
 from private_module.models import PrivateBox, PrivateMessage
@@ -85,12 +86,16 @@ class ListPrivateMessages(ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_class = PrivateMessageFilter
 
+    @cached_property
+    def auth_user(self):
+        return self.request.user
+
     def get_queryset(self):
         try:
             box = PrivateBox.objects.get(pk=self.kwargs["box_id"])
         except box.DoesNotExist:
             raise NotFound
-        sender = self.request.user
+        sender = self.auth_user
         if not (sender == box.second_user or sender == box.first_user):
             raise PermissionDenied
 
@@ -98,8 +103,47 @@ class ListPrivateMessages(ListAPIView):
 
     def filter_queryset(self, queryset):
         messages = super().filter_queryset(queryset)
-        messages.update(is_read=True)
+        user = self.auth_user
+        is_read_data = []
+        for message in messages:
+            if message.sender != user and not message.is_read:
+                message.is_read = True
+                message.save()
+                is_read_data.append(message)
+        if is_read_data:
+            serializer = PrivateMessageSerializer(data=is_read_data, many=True)
+            channel_layer = get_channel_layer()
+            notification = {
+                "type": "send_message",
+                "message": {
+                    "type": "private_is_read",
+                    "messages": serializer.data,
+                }
+            }
+            private_box = messages[0].box
+            receiver = private_box.receiver(user)
+            async_to_sync(channel_layer.group_send)(f"chat_{receiver.id}", notification)
+
         return messages
+
+class PrivateMessageIsRead(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def put(self, request, message_id):
+        serializer = PrivateMessageIsReadSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = self.request.user
+        box_id = serializer.validated_data["box_id"]
+
+        box = PrivateMessage.objects.filter(id__lte=message_id, box_id=box_id).exclude(sender=user)
+        first_box = box.first()
+        if first_box and (user != first_box.first_user or user != first_box.second_user):
+            raise PermissionDenied
+        box.update(is_read=True)
+        return Response(status=status.HTTP_200_OK)
+
+
+
 
 
 class EditPrivateMessage(UpdateAPIView):

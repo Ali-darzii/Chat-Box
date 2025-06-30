@@ -1,8 +1,7 @@
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import UpdateAPIView, RetrieveAPIView, ListAPIView
+from rest_framework.generics import UpdateAPIView, RetrieveAPIView
 from rest_framework.viewsets import ModelViewSet
 from django.db.models import Q
-from auth_module.models import User
 from private_module.models import PrivateBox
 from user_module.serializers import UpdateUserSerializer, GetUserDetailSerializer, AddAvatarSerializer
 
