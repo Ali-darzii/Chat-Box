@@ -1,4 +1,4 @@
-from rest_framework.throttling import SimpleRateThrottle
+from rest_framework.throttling import SimpleRateThrottle, UserRateThrottle
 
 class BaseThrottle(SimpleRateThrottle):
     """  Only throttle unauthenticated requests """
@@ -26,3 +26,5 @@ class CheckOTPThrottle(BaseThrottle):
     scope = 'check-otp'
 
 
+class IsReadThrottle(UserRateThrottle):
+    scope = 'user-is-read'

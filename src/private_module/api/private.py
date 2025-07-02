@@ -11,6 +11,7 @@ from asgiref.sync import async_to_sync
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db import IntegrityError as UniqueError
 from django.utils import timezone
+from drf_yasg.utils import swagger_auto_schema
 
 from private_module.helper.filter import PrivateMessageFilter
 from private_module.serializers import (
@@ -21,6 +22,7 @@ from private_module.serializers import (
 
 )
 from private_module.models import PrivateBox, PrivateMessage
+from utils.throttle import IsReadThrottle
 
 
 class ListPrivateBox(ListAPIView):
@@ -36,7 +38,11 @@ class ListPrivateBox(ListAPIView):
 
 class SendPrivateMessage(APIView):
     permission_classes = (IsAuthenticated,)
-
+    @swagger_auto_schema(
+        request_body=SendPrivateMessageSerializer,
+        responses={200: '{"data": "message sent."}'},
+        operation_description="Raises: 400, 403"
+    )
     def post(self, request):
         serializer = SendPrivateMessageSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -128,6 +134,7 @@ class ListPrivateMessages(ListAPIView):
 
 class PrivateMessageIsRead(APIView):
     permission_classes = (IsAuthenticated,)
+    throttle_classes = IsReadThrottle
 
     def put(self, request, message_id):
         serializer = PrivateMessageIsReadSerializer(data=request.data)

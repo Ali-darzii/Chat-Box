@@ -8,6 +8,7 @@ from django.core.cache import cache as redis
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 import logging
+from drf_yasg.utils import swagger_auto_schema
 
 from auth_module.models import User
 from auth_module.tasks import send_sms
@@ -36,9 +37,11 @@ class OTPView(APIView):
 
     """
 
+    @swagger_auto_schema(query_serializer=OTPSendSerializer, responses={200: '{"user_exist": True or False}'})
     def get(self, request):
         """ User Exist? """
-        serializer = OTPSendSerializer(data=request.data)
+
+        serializer = OTPSendSerializer(data=request.query_params.dict())
         serializer.is_valid(raise_exception=True)
         phone_no = serializer.validated_data['phone_no']
         data = {}
@@ -50,6 +53,11 @@ class OTPView(APIView):
             data["user_exist"] = False
             return Response(data=data, status=status.HTTP_404_NOT_FOUND)
 
+    @swagger_auto_schema(request_body=OTPSendSerializer,
+                         responses={200: '{"data": "Sms sent successfully", "new_user": True or False}'},
+                         operation_description="Raises: 400, 429"
+
+                         )
     def post(self, request):
         """ Send OTP """
         serializer = OTPSendSerializer(data=request.data)
@@ -83,6 +91,11 @@ class OTPView(APIView):
         send_sms.delay(phone_no, tk)
         return Response({"data": "Sms sent successfully", "new_user": True}, status=status.HTTP_200_OK)
 
+    @swagger_auto_schema(
+        request_body=OTPCheckSerializer,
+        responses={200: '{"refresh_token": string, "access_token": string, user_id:integer}'},
+        operation_description="Raises: 400, 429"
+    )
     def put(self, request):
         """ Check OTP """
         serializer = OTPCheckSerializer(data=request.data)
@@ -170,6 +183,9 @@ class CustomRefreshTokenView(TokenRefreshView):
 class Logout(APIView):
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(
+        operation_description="Need to refresh token be in cookies."
+    )
     def post(self, request):
         try:
             refresh_token = request.COOKIES["refresh"]
@@ -188,6 +204,11 @@ class OTPResetPassword(APIView):
 
 
     """
+    @swagger_auto_schema(
+        request_body=OTPResetPasswordSerializer,
+        responses={200: '{"refresh_token": string, "access_token": string, user_id:integer}'},
+        operation_description="Raises: 400"
+    )
     def put(self, request):
         serializer = OTPResetPasswordSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
