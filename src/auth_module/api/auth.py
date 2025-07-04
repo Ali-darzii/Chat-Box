@@ -17,7 +17,7 @@ from auth_module.serializers import OTPSendSerializer, OTPCheckSerializer, Custo
     OTPResetPasswordSerializer
 from utils.throttle import SendOTPThrottle, CheckOTPThrottle, UserExistThrottle
 from utils.utils import generate_tk
-
+   
 logger = logging.getLogger("django")
 
 

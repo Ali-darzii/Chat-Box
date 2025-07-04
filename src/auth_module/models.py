@@ -10,6 +10,7 @@ from django.dispatch import receiver
 
 from private_module.tasks import create_private_box
 
+
 class CustomUserManager(UserManager):
     """
     Custom user manager for our project is base on phone_no.
@@ -40,13 +41,16 @@ class CustomUserManager(UserManager):
 
 class User(AbstractUser):
     username_validator = UnicodeUsernameValidator()
-    username = models.CharField(max_length=150, unique=True, validators=[username_validator],
-                                error_messages={
-                                    "unique": _("A user with that username already exists."),
-                                },
-                                blank=True,
-                                null=True
-                                )
+    username = models.CharField(
+        max_length=150,
+        unique=True,
+        validators=[username_validator],
+        error_messages={
+            "unique": _("A user with that username already exists."),
+        },
+        blank=True,
+        null=True,
+    )
     phone_no = models.CharField(max_length=11, unique=True, db_index=True)
     avatar = models.ImageField(null=True, blank=True, upload_to="media/images/avatars/")
 
@@ -55,11 +59,9 @@ class User(AbstractUser):
     USERNAME_FIELD = "phone_no"
     REQUIRED_FIELDS = []
 
+
 @receiver(post_save, sender=User)
 def create_related_object(sender, instance, created, **kwargs):
     if created:
         # 2s for giving DB transaction time to be complete.
         create_private_box.apply_async((instance.id,), countdown=2)
-
-
-
