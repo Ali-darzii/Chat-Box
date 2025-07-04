@@ -1,8 +1,8 @@
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import UpdateAPIView, RetrieveAPIView, ListAPIView
+from rest_framework.generics import UpdateAPIView, RetrieveAPIView
 from rest_framework.viewsets import ModelViewSet
-
-from auth_module.models import User
+from django.db.models import Q
+from private_module.models import PrivateBox
 from user_module.serializers import UpdateUserSerializer, GetUserDetailSerializer, AddAvatarSerializer
 
 """
@@ -11,11 +11,15 @@ Private API's have only authenticated user access.
 """
 
 
-class PublicGetUserDetail(RetrieveAPIView):
+class PublicUserDetail(RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = GetUserDetailSerializer
-    queryset = User.objects.all()
 
+    def get_queryset(self):
+        user = self.request.user
+        return PrivateBox.objects.filter(
+            Q(first_user=user)| Q(second_user=user)
+        ).select_related("first_user", "second_user").order_by("-id")
 
 class PrivateEditUser(UpdateAPIView):
     permission_classes = (IsAuthenticated,)

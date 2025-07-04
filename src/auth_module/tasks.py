@@ -18,7 +18,7 @@ def send_sms(phone_no:str, token:str):
         "MobileNumber": str(phone_no)
     }
     try:
-        for i in range(3):
+        for _ in range(3):
             request = requests.post(url=url, json=payload_json, headers={"apiKey": api_key})
             request_response = simplejson.loads(request.text)
             if request.status_code == status.HTTP_200_OK:

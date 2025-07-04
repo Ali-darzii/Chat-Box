@@ -46,11 +46,13 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "django_filters",
+    "drf_yasg",
 
     # Internal
     "auth_module",
     "private_module",
     "user_module",
+    "group_module",
 ]
 
 MIDDLEWARE = [
@@ -184,9 +186,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10,
     'DEFAULT_THROTTLE_RATES': {
-        'user-exist': '30/minute',
+        'user-exist': '20/minute',
         'send-otp': '5/minute',
         'check-otp': '10/minute',
+        'user-is-read': '20/minute',
     },
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 

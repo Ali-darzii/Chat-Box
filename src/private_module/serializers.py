@@ -1,10 +1,6 @@
-from django.core.exceptions import PermissionDenied
 from rest_framework import serializers
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-from rest_framework.exceptions import NotFound
-from django.utils import timezone
-from django.db import IntegrityError as UniqueError
 
 from user_module.serializers import AvatarSerializer
 from utils.response import ErrorResponses as error
@@ -12,10 +8,10 @@ from private_module.models import PrivateBox, PrivateMessage
 from auth_module.models import User
 
 
-class PrivateUserSerializer(serializers.ModelSerializer):
+class ChatUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "username", "phone_no", "avatar")
+        fields = ("id","first_name", "last_name", "username", "phone_no", "avatar")
 
     avatar = serializers.SerializerMethodField()
 
@@ -33,8 +29,8 @@ class ListPrivateBoxSerializer(serializers.ModelSerializer):
 
     def get_user(self, instance):
         auth_user = self.context["request"].user
-        front_user = instance.first_user if instance.second_user == auth_user else instance.second_user
-        serializer = PrivateUserSerializer(front_user)
+        front_user = instance.receiver(auth_user)
+        serializer = ChatUserSerializer(front_user)
         return serializer.data
 
 
@@ -53,13 +49,12 @@ class SendPrivateMessageSerializer(serializers.Serializer):
         return attrs
 
     def validate_file(self, file):
-        if file:
-            if file.size > 10 * 1024 * 1024:
-                raise serializers.ValidationError("File must contain less than 10Mb volume.")
+        if file.size > 10 * 1024 * 1024:
+            raise serializers.ValidationError("File must contain less than 10Mb volume.")
 
-            file_name = default_storage.save(f"pv_files/{file.name}", ContentFile(file.read()))
-            file_url = default_storage.url(file_name)
-            return file_url
+        file_name = default_storage.save(f"pv_files/{file.name}", ContentFile(file.read()))
+        file_url = default_storage.url(file_name)
+        return file_url
 
         return file
 
@@ -67,11 +62,18 @@ class SendPrivateMessageSerializer(serializers.Serializer):
 class PrivateMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrivateMessage
+        exclude = ("updated_at")
+
+    sender = ChatUserSerializer()
+
+class PrivateMessageOutputSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PrivateMessage
         exclude = ("updated_at",)
 
-    box = serializers.IntegerField(source="box.id")
-    sender = PrivateUserSerializer()
-
+class PrivateMessageIsReadSerializer(serializers.Serializer):
+    box_id = serializers.IntegerField(min_value=1)
+    
 
 class EditPrivateMessageSerializer(serializers.ModelSerializer):
     class Meta:
