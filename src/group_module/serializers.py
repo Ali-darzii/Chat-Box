@@ -1,8 +1,10 @@
 from rest_framework import serializers
+from rest_framework.exceptions import PermissionDenied
 
 from group_module.models import GroupBox, GroupBoxAvatar
 from utils.response import ErrorResponses as error
 from private_module.serializers import ChatUserSerializer
+
 
 class GroupAvatarSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,9 +25,9 @@ class CreateGroupBoxSerializer(serializers.ModelSerializer):
         return group_avatar.avatar.url if group_avatar else None
 
     def validate(self, attrs):
-        user = self.context['request'].user
-        users = attrs.get('users')
-        admins = attrs.get('admins')
+        user = self.context["request"].user
+        users = attrs.get("users")
+        admins = attrs.get("admins")
 
         if len(users) < 2:
             raise serializers.ValidationError(error.BAD_REQUEST)
@@ -34,15 +36,14 @@ class CreateGroupBoxSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        avatar = validated_data.pop('avatar', None)
+        avatar = validated_data.pop("avatar", None)
         group = super().create(validated_data)
         if avatar:
             GroupBoxAvatar.objects.create(group=group, avatar=avatar)
         return group
 
 
-
-class GroupBoxDetailSerializer(serializers.ModelSerializer):
+class DetailGroupBoxSerializer(serializers.ModelSerializer):
     class Meta:
         model = GroupBox
         fields = "__all__"
@@ -53,3 +54,22 @@ class GroupBoxDetailSerializer(serializers.ModelSerializer):
     def get_avatars(self, obj):
         serializer = GroupAvatarSerializer(obj.group_avatars.all(), many=True)
         return serializer.data
+
+
+class EditGroupBoxSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GroupBox
+        exclude = ("last_message",)
+
+    def update(self, instance, validated_data):
+        user = self.context["request"].user
+        new_admins = set(validated_data.get("admins", []))
+        current_admins = set(instance.admins.all())
+
+        if new_admins and new_admins != current_admins:
+            allowed_change = current_admins - {user}
+            if new_admins != allowed_change:
+                raise PermissionDenied()
+                    
+        group = super().update(instance, validated_data)
+        return group
