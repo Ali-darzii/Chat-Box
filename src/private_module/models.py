@@ -20,6 +20,13 @@ class PrivateBox(models.Model):
 
     def receiver(self, sender: User):
         return self.second_user if self.first_user == sender else self.first_user
+    
+    def is_user_included(self, user: User):
+        if not (user == self.first_user or user == self.second_user):
+             return False
+        return True
+    
+    
 
 class PrivateMessage(models.Model):
     message = models.TextField(blank=True, null=True)
@@ -32,7 +39,7 @@ class PrivateMessage(models.Model):
     is_delete = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.sender} - {self.box}"
+        return f"Sender: {self.sender} - Box: {self.box}"
 
     class Meta:
         ordering = ("-created_at",)

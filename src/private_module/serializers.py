@@ -63,11 +63,18 @@ class SendPrivateMessageSerializer(serializers.Serializer):
 class PrivateMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrivateMessage
-        exclude = ("updated_at",)
+        exclude = ("updated_at")
 
-    box = serializers.IntegerField(source="box.id")
     sender = ChatUserSerializer()
 
+class PrivateMessageOutputSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PrivateMessage
+        exclude = ("updated_at",)
+
+class PrivateMessageIsReadSerializer(serializers.Serializer):
+    box_id = serializers.IntegerField(min_value=1)
+    
 
 class EditPrivateMessageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -80,5 +87,3 @@ class EditPrivateMessageSerializer(serializers.ModelSerializer):
         if is_delete:
             raise serializers.ValidationError(error.BAD_FORMAT)
         return is_delete
-class PrivateMessageIsReadSerializer(serializers.Serializer):
-    box_id = serializers.IntegerField(min_value=1)
