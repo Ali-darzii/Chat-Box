@@ -103,12 +103,10 @@ class ListPrivateMessages(ListAPIView):
     def get_queryset(self):
         try:
             box = PrivateBox.objects.get(pk=self.kwargs["box_id"])
+            if not box.is_user_included(self.request.user):
+                raise PermissionDenied
         except box.DoesNotExist:
             raise NotFound
-        sender = self.request.user
-        if not box.is_user_included(sender):
-            raise PermissionDenied
-
         return PrivateMessage.objects.filter(box=box, is_delete=False).order_by(
             "-created_at"
         )

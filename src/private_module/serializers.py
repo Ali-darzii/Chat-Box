@@ -49,13 +49,12 @@ class SendPrivateMessageSerializer(serializers.Serializer):
         return attrs
 
     def validate_file(self, file):
-        if file:
-            if file.size > 10 * 1024 * 1024:
-                raise serializers.ValidationError("File must contain less than 10Mb volume.")
+        if file.size > 10 * 1024 * 1024:
+            raise serializers.ValidationError("File must contain less than 10Mb volume.")
 
-            file_name = default_storage.save(f"pv_files/{file.name}", ContentFile(file.read()))
-            file_url = default_storage.url(file_name)
-            return file_url
+        file_name = default_storage.save(f"pv_files/{file.name}", ContentFile(file.read()))
+        file_url = default_storage.url(file_name)
+        return file_url
 
         return file
 
