@@ -1,7 +1,15 @@
 from rest_framework.generics import CreateAPIView, UpdateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import GenericViewSet
+from rest_framework.mixins import (
+    CreateModelMixin,
+    ListModelMixin,
+    DestroyModelMixin
+)
 
+from django_filters.rest_framework import DjangoFilterBackend
+
+from group_module.helper.filter import GroupBoxAvatarFilter
 from group_module.models import GroupBox, GroupBoxAvatar
 from group_module.serializers import (
     CreateGroupBoxSerializer,
@@ -50,9 +58,15 @@ class EditGroupBoxUsers(UpdateAPIView):
         return GroupBox.objects.filter(admins=self.request.user)
 
 
-class GroupBoxAvatarViewSet(ModelViewSet):
+class GroupBoxAvatarViewSet(
+    GenericViewSet, CreateModelMixin, ListModelMixin, DestroyModelMixin
+):
     permission_classes = (IsAuthenticated,)
     serializer_class = GroupBoxAvatarViewSetSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = GroupBoxAvatarFilter
 
     def get_queryset(self):
+        if self.request.method == "GET":
+            return GroupBoxAvatar.objects.filter(group__users=self.request.user)
         return GroupBoxAvatar.objects.filter(group__admins=self.request.user)
