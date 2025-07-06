@@ -34,7 +34,7 @@ class GroupBoxMessage(models.Model):
 
 class GroupBoxAvatar(models.Model):
     group = models.ForeignKey(GroupBox, on_delete=models.CASCADE, related_name="group_avatars")
-    avatar = models.ImageField(null=True, blank=True, upload_to="gp_avatars/")
+    avatar = models.ImageField(upload_to="gp_avatars/")
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

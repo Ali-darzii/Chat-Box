@@ -69,4 +69,10 @@ class GroupBoxAvatarViewSet(
     def get_queryset(self):
         if self.request.method == "GET":
             return GroupBoxAvatar.objects.filter(group__users=self.request.user)
+        print(GroupBoxAvatar.objects.filter(group__admins=self.request.user))
         return GroupBoxAvatar.objects.filter(group__admins=self.request.user)
+
+    def filter_queryset(self, queryset):
+        if self.request.method == "GET":
+            return super().filter_queryset(queryset)
+        return queryset
