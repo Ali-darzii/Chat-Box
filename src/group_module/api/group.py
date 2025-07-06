@@ -2,11 +2,11 @@ from rest_framework.generics import CreateAPIView, UpdateAPIView, RetrieveAPIVie
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
-
 from group_module.models import GroupBox, GroupBoxAvatar
 from group_module.serializers import (
     CreateGroupBoxSerializer,
     DetailGroupBoxSerializer,
+    EditGroubBoxUsersSerializer,
     EditGroupBoxAdminsSerializer,
     EditGroupBoxNameSerializer,
     GroupBoxAvatarViewSetSerializer,
@@ -33,20 +33,21 @@ class EditGroupBoxName(UpdateAPIView):
     def get_queryset(self):
         return GroupBox.objects.filter(admins=self.request.user)
 
+
 class EditGroupBoxAdmins(UpdateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = EditGroupBoxAdminsSerializer
-    
+
     def get_queryset(self):
         return GroupBox.objects.filter(admins=self.request.user)
 
-class EditGroupBoxUsers():
+
+class EditGroupBoxUsers(UpdateAPIView):
     permission_classes = (IsAuthenticated,)
-    
+    serializer_class = EditGroubBoxUsersSerializer
+
     def get_queryset(self):
         return GroupBox.objects.filter(admins=self.request.user)
-
-
 
 
 class GroupBoxAvatarViewSet(ModelViewSet):

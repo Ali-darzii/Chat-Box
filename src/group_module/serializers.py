@@ -66,30 +66,55 @@ class EditGroupBoxAdminsSerializer(serializers.ModelSerializer):
     class Meta:
         model = GroupBox
         fields = ("admins",)
-        extra_kwargs = {"admins": {"required": True}}
+
+    def validate(self, attrs):
+        if "admins" not in attrs:
+            raise serializers.ValidationError(error.BAD_FORMAT)
+        return attrs
 
     def update(self, instance, validated_data):
-        user = self.context["request"].user
+        request_user = self.context["request"].user
         new_admins = set(validated_data["admins"])
         current_admins = set(instance.admins.all())
+        group_users = set(instance.users.all())
 
-        if new_admins not in instance.users.all():
-            raise serializers.ValidationError(error.BAD_REQUEST)
+        if not new_admins.issubset(group_users):
+            raise serializers.ValidationError("All admins must be members of the group.")
 
-        if new_admins and new_admins != current_admins:
-            allowed_change = current_admins - {user}
-            if new_admins != allowed_change:
-                raise PermissionDenied
+        removed_admins = current_admins - new_admins
+        if removed_admins - {request_user}:
+            raise serializers.ValidationError("You cannot remove other admins.")
 
-        return super().update(instance, validated_data)
+        added_admins = new_admins - current_admins
+        for added_user in added_admins:
+            if added_user not in group_users:
+                raise serializers.ValidationError("You can only add users who are already in the group.")
+
+        instance.admins.set(new_admins)
+        instance.save()
+        return instance
+
 
 
 class EditGroubBoxUsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = GroupBox
         fields = ("users",)
-        
-    
+
+    def validate(self, attrs):
+        if "users" not in attrs:
+            raise serializers.ValidationError(error.BAD_FORMAT)
+        return attrs
+
+    def update(self, instance, validated_data):
+        new_users = validated_data["users"]
+        current_admins = instance.admins.all()
+
+        for admin in current_admins:
+            if admin not in new_users:
+                instance.admins.remove(admin)
+
+        return super().update(instance, validated_data)
 
 
 class GroupBoxAvatarViewSetSerializer(serializers.ModelSerializer):

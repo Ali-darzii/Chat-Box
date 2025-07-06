@@ -5,7 +5,7 @@ from user_module.api import user
 
 router = DefaultRouter()
 
-router.register("private/avatar", user.PrivateAvatarViewSet, basename="avatar")
+router.register("private/avatar", user.PrivateAvatarViewSet, basename="private_avatar")
 
 
 urlpatterns = [
