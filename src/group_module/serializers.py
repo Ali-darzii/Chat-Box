@@ -56,20 +56,44 @@ class DetailGroupBoxSerializer(serializers.ModelSerializer):
         return serializer.data
 
 
-class EditGroupBoxSerializer(serializers.ModelSerializer):
+class EditGroupBoxNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = GroupBox
-        exclude = ("last_message",)
+        fields = ("name",)
+
+
+class EditGroupBoxAdminsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GroupBox
+        fields = ("admins",)
+        extra_kwargs = {"admins": {"required": True}}
 
     def update(self, instance, validated_data):
         user = self.context["request"].user
-        new_admins = set(validated_data.get("admins", []))
+        new_admins = set(validated_data["admins"])
         current_admins = set(instance.admins.all())
+
+        if new_admins not in instance.users.all():
+            raise serializers.ValidationError(error.BAD_REQUEST)
 
         if new_admins and new_admins != current_admins:
             allowed_change = current_admins - {user}
             if new_admins != allowed_change:
-                raise PermissionDenied()
-                    
-        group = super().update(instance, validated_data)
-        return group
+                raise PermissionDenied
+
+        return super().update(instance, validated_data)
+
+
+class EditGroubBoxUsersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GroupBox
+        fields = ("users",)
+        
+    
+
+
+class GroupBoxAvatarViewSetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GroupBoxAvatar
+        fields = "__all__"
+        extra_kwargs = {"created_at": {"read_only": True}}
