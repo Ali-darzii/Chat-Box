@@ -1,4 +1,3 @@
-from django.utils.functional import cached_property
 from rest_framework.exceptions import PermissionDenied, NotFound, ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import ListAPIView, UpdateAPIView
@@ -73,12 +72,12 @@ class SendPrivateMessage(APIView):
         if not box.is_user_included(sender):
             raise PermissionDenied
 
-        box.last_message = timezone.now()
-        box.save()
         PrivateMessage.objects.create(
             message=message, file=file_url, sender=sender, box=box
         )
-
+        box.last_message = timezone.now()
+        box.save()
+        
         channel_layer = get_channel_layer()
         notification = {
             "type": "send_message",

@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 from group_module.models import GroupBox, GroupBoxAvatar
 from utils.response import ErrorResponses as error
@@ -122,3 +124,26 @@ class GroupBoxAvatarViewSetSerializer(serializers.ModelSerializer):
         model = GroupBoxAvatar
         fields = "__all__"
         extra_kwargs = {"created_at": {"read_only": True}}
+
+class GroupSendMessageSerializer(serializers.Serializer):
+    box_id = serializers.IntegerField(default=0, min_value=1)
+    message = serializers.CharField(required=False)
+    file = serializers.FileField(required=False, max_length=100)
+    
+    def validate(self, attrs):
+        file = attrs.get("file")
+        message = attrs.get("message")
+        if not (message or file):
+            raise serializers.ValidationError(error.MISSING_PARAMS)
+
+        return attrs
+
+    def validate_file(self, file):
+        if file.size > 10 * 1024 * 1024:
+            raise serializers.ValidationError("File must contain less than 10Mb volume.")
+
+        file_name = default_storage.save(f"pv_files/{file.name}", ContentFile(file.read()))
+        file_url = default_storage.url(file_name)
+        return file_url
+
+        return file

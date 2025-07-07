@@ -56,8 +56,6 @@ class SendPrivateMessageSerializer(serializers.Serializer):
         file_url = default_storage.url(file_name)
         return file_url
 
-        return file
-
 
 class PrivateMessageSerializer(serializers.ModelSerializer):
     class Meta:
