@@ -1,11 +1,8 @@
 from rest_framework.generics import CreateAPIView, UpdateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.mixins import (
-    CreateModelMixin,
-    ListModelMixin,
-    DestroyModelMixin
-)
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, DestroyModelMixin
+from rest_framework.views import APIView
 
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -76,3 +73,8 @@ class GroupBoxAvatarViewSet(
         if self.request.method == "GET":
             return super().filter_queryset(queryset)
         return queryset
+
+
+class SendGroupMessage(APIView):
+    permission_classes = (IsAuthenticated,)
+    
