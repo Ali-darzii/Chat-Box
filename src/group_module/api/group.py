@@ -10,6 +10,7 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from rest_framework.response import Response
 from rest_framework import status
+from drf_yasg.utils import swagger_auto_schema
 
 from utils.throttle import IsReadThrottle
 from group_module.helper.filter import GroupBoxAvatarFilter
@@ -128,7 +129,10 @@ class SendGroupMessage(APIView):
 class GroupMessageIsRead(APIView):
     permission_classes = IsAuthenticated
     throttle_classes = (IsReadThrottle,)
-
+    @swagger_auto_schema(
+        request_body=GroupMessageIsReadSerializer,
+        responses={200: GroupMessageOutputSerializer},
+    )
     def put(self, request, message_id):
         serializer = GroupMessageIsReadSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
