@@ -11,12 +11,14 @@ from auth_module.models import User
 class ChatUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id","first_name", "last_name", "username", "phone_no", "avatar")
+        fields = ("id", "first_name", "last_name", "username", "phone_no", "avatar")
 
     avatar = serializers.SerializerMethodField()
 
     def get_avatar(self, obj):
-        serializer =  AvatarSerializer(obj.avatars.filter(is_delete=False).order_by("-created_at").last())
+        serializer = AvatarSerializer(
+            obj.avatars.filter(is_delete=False).order_by("-created_at").last()
+        )
         return serializer.data
 
 
@@ -50,9 +52,13 @@ class SendPrivateMessageSerializer(serializers.Serializer):
 
     def validate_file(self, file):
         if file.size > 10 * 1024 * 1024:
-            raise serializers.ValidationError("File must contain less than 10Mb volume.")
+            raise serializers.ValidationError(
+                "File must contain less than 10Mb volume."
+            )
 
-        file_name = default_storage.save(f"pv_files/{file.name}", ContentFile(file.read()))
+        file_name = default_storage.save(
+            f"pv_files/{file.name}", ContentFile(file.read())
+        )
         file_url = default_storage.url(file_name)
         return file_url
 
@@ -60,18 +66,20 @@ class SendPrivateMessageSerializer(serializers.Serializer):
 class PrivateMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrivateMessage
-        exclude = ("updated_at")
+        exclude = "updated_at"
 
     sender = ChatUserSerializer()
+
 
 class PrivateMessageOutputSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrivateMessage
         exclude = ("updated_at",)
 
+
 class PrivateMessageIsReadSerializer(serializers.Serializer):
     box_id = serializers.IntegerField(min_value=1)
-    
+
 
 class EditPrivateMessageSerializer(serializers.ModelSerializer):
     class Meta:

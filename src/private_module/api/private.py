@@ -77,7 +77,7 @@ class SendPrivateMessage(APIView):
         )
         box.last_message = timezone.now()
         box.save()
-        
+
         channel_layer = get_channel_layer()
         notification = {
             "type": "send_message",
@@ -151,7 +151,11 @@ class PrivateMessageIsRead(APIView):
         channel_layer = get_channel_layer()
         notification = {
             "type": "send_message",
-            "message": {"type": "private_is_read", "messages": updated_messages},
+            "message": {
+                "type": "private_is_read",
+                "messages": updated_messages,
+                "box_id": box.id,
+            },
         }
         async_to_sync(channel_layer.group_send)(f"chat_{sender.id}", notification)
         return Response(data=updated_messages, status=status.HTTP_200_OK)

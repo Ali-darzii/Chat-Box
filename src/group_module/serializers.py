@@ -3,7 +3,7 @@ from rest_framework.exceptions import PermissionDenied
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 
-from group_module.models import GroupBox, GroupBoxAvatar
+from group_module.models import GroupBox, GroupBoxAvatar, GroupBoxMessage
 from utils.response import ErrorResponses as error
 from private_module.serializers import ChatUserSerializer
 
@@ -146,4 +146,12 @@ class GroupSendMessageSerializer(serializers.Serializer):
         file_url = default_storage.url(file_name)
         return file_url
 
-        return file
+
+class GroupMessageIsReadSerializer(serializers.Serializer):
+    box_id = serializers.IntegerField(min_value=1)
+    
+    
+class GroupMessageOutputSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GroupBoxMessage
+        exclude = ("updated_at",)

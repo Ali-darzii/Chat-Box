@@ -18,7 +18,7 @@ class GroupBox(models.Model):
 class GroupBoxMessage(models.Model):
     message = models.TextField(blank=True, null=True)
     file = models.FileField(blank=True, null=True, upload_to="gp_files/")
-    group = models.ForeignKey(GroupBox, on_delete=models.CASCADE, related_name="messages")
+    box = models.ForeignKey(GroupBox, on_delete=models.CASCADE, related_name="box")
     sender = models.ForeignKey(User, related_name="group_sender", on_delete=models.CASCADE)
     is_delete = models.BooleanField(default=False)
     is_read = models.BooleanField(default=False)
